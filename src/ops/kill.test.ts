@@ -9,11 +9,13 @@ import { run } from "./testing";
 
 describe("killSexp", () => {
   it.each([
-    ["deletes the next datum", "(foo ‸bar baz)", "(foo ‸ baz)"],
-    ["deletes a whole list", "(foo ‸(bar baz) qux)", "(foo ‸ qux)"],
-    ["deletes a quoted datum with its prefix", "(foo ‸'(bar) baz)", "(foo ‸ baz)"],
+    ["deletes the next datum", "(foo ‸bar baz)", "(foo ‸baz)"],
+    ["deletes a whole list", "(foo ‸(bar baz) qux)", "(foo ‸qux)"],
+    ["deletes a quoted datum with its prefix", "(foo ‸'(bar) baz)", "(foo ‸baz)"],
     ["deletes to the end of the atom the caret is in", "(foo ba‸r baz)", "(foo ba‸ baz)"],
-    ["deletes a string whole", '(foo ‸"a (b" c)', "(foo ‸ c)"],
+    ["deletes a string whole", '(foo ‸"a (b" c)', "(foo ‸c)"],
+    ["leaves no gap against a closing bracket", "(foo ‸bar)", "(foo‸)"],
+    ["leaves no gap against an opening bracket", "(‸foo bar)", "(‸bar)"],
   ])("%s", (_name, before, after) => {
     expect(run(killSexp, before)).toBe(after);
   });
@@ -25,9 +27,10 @@ describe("killSexp", () => {
 
 describe("backwardKillSexp", () => {
   it.each([
-    ["deletes the previous datum", "(foo bar‸ baz)", "(foo ‸ baz)"],
-    ["deletes a whole list", "(foo (bar baz)‸ qux)", "(foo ‸ qux)"],
-    ["takes a reader prefix with it", "(foo '(bar)‸ baz)", "(foo ‸ baz)"],
+    ["deletes the previous datum", "(foo bar‸ baz)", "(foo ‸baz)"],
+    ["deletes a whole list", "(foo (bar baz)‸ qux)", "(foo ‸qux)"],
+    ["takes a reader prefix with it", "(foo '(bar)‸ baz)", "(foo ‸baz)"],
+    ["leaves no gap against a closing bracket", "(foo bar‸)", "(foo‸)"],
   ])("%s", (_name, before, after) => {
     expect(run(backwardKillSexp, before)).toBe(after);
   });

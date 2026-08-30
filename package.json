@@ -47,13 +47,13 @@
         "category": "Paredit"
       },
       {
-        "command": "paredit-redex.forwardUpSexp",
-        "title": "Forward Up Sexp",
+        "command": "paredit-redex.backwardUpSexp",
+        "title": "Backward Up Sexp",
         "category": "Paredit"
       },
       {
-        "command": "paredit-redex.backwardUpSexp",
-        "title": "Backward Up Sexp",
+        "command": "paredit-redex.forwardUpSexp",
+        "title": "Forward Up Sexp",
         "category": "Paredit"
       },
       {
@@ -155,6 +155,11 @@
         "command": "paredit-redex.dragBackward",
         "title": "Drag Sexp Backward",
         "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.cheatSheet",
+        "title": "Cheat Sheet",
+        "category": "Paredit"
       }
     ],
     "keybindings": [
@@ -169,13 +174,13 @@
         "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
       },
       {
-        "command": "paredit-redex.forwardUpSexp",
-        "key": "ctrl+alt+n",
+        "command": "paredit-redex.backwardUpSexp",
+        "key": "ctrl+alt+u",
         "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
       },
       {
-        "command": "paredit-redex.backwardUpSexp",
-        "key": "ctrl+alt+u",
+        "command": "paredit-redex.forwardUpSexp",
+        "key": "ctrl+alt+n",
         "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
       },
       {
@@ -311,7 +316,8 @@
     "test:vscode": "vscode-test",
     "prepare": "husky",
     "package": "vsce package --no-dependencies --allow-unused-files-pattern --allow-missing-repository",
-    "test:fixtures": "node test/oracle/generate.mjs"
+    "test:fixtures": "node test/oracle/generate.mjs",
+    "sync:contributions": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/sync-contributions.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

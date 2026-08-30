@@ -67,6 +67,14 @@ export default tseslint.config(
     }
   },
   {
+    // Every lookup here is a `Record` keyed by a string-literal union, so the
+    // key is checked by the type system before it reaches the index.
+    files: ["src/cheatsheet/**/*.ts"],
+    rules: {
+      "security/detect-object-injection": "off"
+    }
+  },
+  {
     // These harnesses shell out to the local Racket install and read fixtures
     // and its source tree; resolving `racket` and `find` through PATH and
     // reading paths built at runtime is the job, not an oversight. None of it
@@ -75,6 +83,7 @@ export default tseslint.config(
       "src/**/oracle-corpus.test.ts",
       "src/**/oracle-diff.test.ts",
       "src/**/robustness.test.ts",
+      "src/**/catalog.test.ts",
     ],
     rules: {
       "sonarjs/no-os-command-from-path": "off",
@@ -98,6 +107,7 @@ export default tseslint.config(
       "vitest.oracle.mts",
       ".vscode-test.mjs",
       "test/**",
+      "scripts/**",
       ".remember/**"
     ]
   }

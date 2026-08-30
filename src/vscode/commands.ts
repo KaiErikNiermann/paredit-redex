@@ -8,33 +8,20 @@
  */
 
 import * as vscode from "vscode";
-import {
-  backwardDatum,
-  backwardDownList,
-  backwardUpList,
-  downList,
-  forwardDatum,
-  forwardUpList,
-} from "../reader/cursor";
-import type { TokenizedDocument } from "../reader/document";
 import type { Edit, EditPlan, Operation } from "../ops/edits";
+import type { Motion } from "../ops/motions";
+import { MOTIONS } from "../ops/motions";
 import { OPERATIONS } from "../ops";
 import type { Logger } from "../logger";
+import type { CheatSheetPanel } from "./cheatsheet-panel";
 import type { DocumentStore } from "./document-store";
 import { isSupported } from "./languages";
 
-type Motion = (document: TokenizedDocument, offset: number) => number | undefined;
-
-const MOTIONS: Readonly<Record<string, Motion>> = {
-  forwardSexp: forwardDatum,
-  backwardSexp: backwardDatum,
-  forwardUpSexp: forwardUpList,
-  backwardUpSexp: backwardUpList,
-  forwardDownSexp: downList,
-  backwardDownSexp: backwardDownList,
-};
-
-export function registerCommands(store: DocumentStore, logger: Logger): vscode.Disposable[] {
+export function registerCommands(
+  store: DocumentStore,
+  cheatSheet: CheatSheetPanel,
+  logger: Logger,
+): vscode.Disposable[] {
   const motions = Object.entries(MOTIONS).map(([name, motion]) =>
     vscode.commands.registerCommand(`paredit-redex.${name}`, () => {
       applyMotion(store, motion);
@@ -45,7 +32,10 @@ export function registerCommands(store: DocumentStore, logger: Logger): vscode.D
       await applyOperation(store, operation, logger);
     }),
   );
-  return [...motions, ...operations];
+  const help = vscode.commands.registerCommand("paredit-redex.cheatSheet", () => {
+    cheatSheet.openOrReveal();
+  });
+  return [...motions, ...operations, help];
 }
 
 /** The active editor, if it holds a document this extension handles. */

@@ -3,9 +3,56 @@
  */
 
 import { backwardDatum, enclosingList, forwardDatum } from "../reader/cursor";
+import type { Span } from "../reader/cursor";
 import type { TokenizedDocument } from "../reader/document";
+import { isDelimiterChar } from "../reader/tokens";
 import type { EditPlan } from "./edits";
 import { mapOffset, remove, removeSeparating, withLeadingSpace } from "./edits";
+
+const SPACE = /\s/;
+
+/**
+ * Widen a deletion so that removing a datum does not leave the gap behind.
+ *
+ * Deleting `b` from `(a b c)` on the nose gives `(a  c)`, and from `(a b)` it
+ * gives `(a )`. Emacs leaves both; there is no reason to. The rule is to absorb
+ * the whitespace on whichever side would otherwise be doubled or stranded
+ * against a bracket.
+ */
+function tidyKillSpan(text: string, span: Span): Span {
+  const before = text[span.start - 1];
+  const after = text[span.end];
+
+  if ((before === undefined || SPACE.test(before) || isOpener(before)) && isSpace(after)) {
+    let end = span.end;
+    while (isSpace(text[end])) {
+      end += 1;
+    }
+    return { start: span.start, end };
+  }
+
+  if (before !== undefined && SPACE.test(before) && (after === undefined || isCloser(after))) {
+    let start = span.start;
+    while (start > 0 && isSpace(text[start - 1])) {
+      start -= 1;
+    }
+    return { start, end: span.end };
+  }
+
+  return span;
+}
+
+function isSpace(char: string | undefined): boolean {
+  return char !== undefined && SPACE.test(char);
+}
+
+function isOpener(char: string): boolean {
+  return isDelimiterChar(char) && ["(", "[", "{"].includes(char);
+}
+
+function isCloser(char: string): boolean {
+  return isDelimiterChar(char) && [")", "]", "}"].includes(char);
+}
 
 /** Delete from the caret through the end of the next datum. */
 export function killSexp(
@@ -16,7 +63,8 @@ export function killSexp(
   if (end === undefined || end <= offset) {
     return undefined;
   }
-  return { edits: [remove({ start: offset, end })], caret: offset };
+  const span = tidyKillSpan(document.getText(), { start: offset, end });
+  return { edits: [remove(span)], caret: span.start };
 }
 
 /** Delete from the start of the previous datum through the caret. */
@@ -28,7 +76,8 @@ export function backwardKillSexp(
   if (start === undefined || start >= offset) {
     return undefined;
   }
-  return { edits: [remove({ start, end: offset })], caret: start };
+  const span = tidyKillSpan(document.getText(), { start, end: offset });
+  return { edits: [remove(span)], caret: span.start };
 }
 
 /**
