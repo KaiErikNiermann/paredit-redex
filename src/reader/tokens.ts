@@ -30,10 +30,11 @@ export type PrefixKind =
   | "quasisyntax" //       #`
   | "unsyntax" //          #,
   | "unsyntax-splicing" // #,@
+  | "box" //               #&
   | "datum-comment"; //    #;
 
 export type TokenKind =
-  | "open" //       ( [ { and prefixed opens: #( #hash( #s( #&
+  | "open" //       ( [ { and prefixed opens: #( #3( #hash( #hasheq( #s(
   | "close" //      ) ] }
   | "atom" //       symbols, numbers, booleans, characters, keywords
   | "string" //     "..." #"..." #rx"..." #px"..."

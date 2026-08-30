@@ -1,0 +1,2438 @@
+[
+  {
+    "name": "bare-brackets",
+    "source": "(a [b] {c})\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 4,
+        "paren": "[",
+        "start": 3,
+        "type": "parenthesis"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 4,
+        "type": "symbol"
+      },
+      {
+        "end": 6,
+        "paren": "]",
+        "start": 5,
+        "type": "parenthesis"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 6,
+        "type": "white-space"
+      },
+      {
+        "end": 8,
+        "paren": "{",
+        "start": 7,
+        "type": "parenthesis"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 8,
+        "type": "symbol"
+      },
+      {
+        "end": 10,
+        "paren": "}",
+        "start": 9,
+        "type": "parenthesis"
+      },
+      {
+        "end": 11,
+        "paren": ")",
+        "start": 10,
+        "type": "parenthesis"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 11,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "list-prefixes",
+    "source": "(#(1 2) #3(a) #hash((a . 1)) #hasheq() #hasheqv() #hashalw() #s(pt 1 2))\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 3,
+        "paren": "(",
+        "start": 1,
+        "type": "parenthesis"
+      },
+      {
+        "end": 4,
+        "paren": null,
+        "start": 3,
+        "type": "constant"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 4,
+        "type": "white-space"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 5,
+        "type": "constant"
+      },
+      {
+        "end": 7,
+        "paren": ")",
+        "start": 6,
+        "type": "parenthesis"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 7,
+        "type": "white-space"
+      },
+      {
+        "end": 11,
+        "paren": "(",
+        "start": 8,
+        "type": "parenthesis"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 11,
+        "type": "symbol"
+      },
+      {
+        "end": 13,
+        "paren": ")",
+        "start": 12,
+        "type": "parenthesis"
+      },
+      {
+        "end": 14,
+        "paren": null,
+        "start": 13,
+        "type": "white-space"
+      },
+      {
+        "end": 20,
+        "paren": "(",
+        "start": 14,
+        "type": "parenthesis"
+      },
+      {
+        "end": 21,
+        "paren": "(",
+        "start": 20,
+        "type": "parenthesis"
+      },
+      {
+        "end": 22,
+        "paren": null,
+        "start": 21,
+        "type": "symbol"
+      },
+      {
+        "end": 23,
+        "paren": null,
+        "start": 22,
+        "type": "white-space"
+      },
+      {
+        "end": 24,
+        "paren": null,
+        "start": 23,
+        "type": "other"
+      },
+      {
+        "end": 25,
+        "paren": null,
+        "start": 24,
+        "type": "white-space"
+      },
+      {
+        "end": 26,
+        "paren": null,
+        "start": 25,
+        "type": "constant"
+      },
+      {
+        "end": 27,
+        "paren": ")",
+        "start": 26,
+        "type": "parenthesis"
+      },
+      {
+        "end": 28,
+        "paren": ")",
+        "start": 27,
+        "type": "parenthesis"
+      },
+      {
+        "end": 29,
+        "paren": null,
+        "start": 28,
+        "type": "white-space"
+      },
+      {
+        "end": 37,
+        "paren": "(",
+        "start": 29,
+        "type": "parenthesis"
+      },
+      {
+        "end": 38,
+        "paren": ")",
+        "start": 37,
+        "type": "parenthesis"
+      },
+      {
+        "end": 39,
+        "paren": null,
+        "start": 38,
+        "type": "white-space"
+      },
+      {
+        "end": 48,
+        "paren": "(",
+        "start": 39,
+        "type": "parenthesis"
+      },
+      {
+        "end": 49,
+        "paren": ")",
+        "start": 48,
+        "type": "parenthesis"
+      },
+      {
+        "end": 50,
+        "paren": null,
+        "start": 49,
+        "type": "white-space"
+      },
+      {
+        "end": 59,
+        "paren": "(",
+        "start": 50,
+        "type": "parenthesis"
+      },
+      {
+        "end": 60,
+        "paren": ")",
+        "start": 59,
+        "type": "parenthesis"
+      },
+      {
+        "end": 61,
+        "paren": null,
+        "start": 60,
+        "type": "white-space"
+      },
+      {
+        "end": 64,
+        "paren": "(",
+        "start": 61,
+        "type": "parenthesis"
+      },
+      {
+        "end": 66,
+        "paren": null,
+        "start": 64,
+        "type": "symbol"
+      },
+      {
+        "end": 67,
+        "paren": null,
+        "start": 66,
+        "type": "white-space"
+      },
+      {
+        "end": 68,
+        "paren": null,
+        "start": 67,
+        "type": "constant"
+      },
+      {
+        "end": 69,
+        "paren": null,
+        "start": 68,
+        "type": "white-space"
+      },
+      {
+        "end": 70,
+        "paren": null,
+        "start": 69,
+        "type": "constant"
+      },
+      {
+        "end": 71,
+        "paren": ")",
+        "start": 70,
+        "type": "parenthesis"
+      },
+      {
+        "end": 72,
+        "paren": ")",
+        "start": 71,
+        "type": "parenthesis"
+      },
+      {
+        "end": 73,
+        "paren": null,
+        "start": 72,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "char-literals",
+    "source": "(#\\( #\\) #\\; #\\\" #\\space #\\newline #\\nul #\\u3BB #\\101 #\\a1 #\\ab)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 4,
+        "paren": null,
+        "start": 1,
+        "type": "constant"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 4,
+        "type": "white-space"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 5,
+        "type": "constant"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 8,
+        "type": "white-space"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 9,
+        "type": "constant"
+      },
+      {
+        "end": 13,
+        "paren": null,
+        "start": 12,
+        "type": "white-space"
+      },
+      {
+        "end": 16,
+        "paren": null,
+        "start": 13,
+        "type": "constant"
+      },
+      {
+        "end": 17,
+        "paren": null,
+        "start": 16,
+        "type": "white-space"
+      },
+      {
+        "end": 24,
+        "paren": null,
+        "start": 17,
+        "type": "constant"
+      },
+      {
+        "end": 25,
+        "paren": null,
+        "start": 24,
+        "type": "white-space"
+      },
+      {
+        "end": 34,
+        "paren": null,
+        "start": 25,
+        "type": "constant"
+      },
+      {
+        "end": 35,
+        "paren": null,
+        "start": 34,
+        "type": "white-space"
+      },
+      {
+        "end": 40,
+        "paren": null,
+        "start": 35,
+        "type": "constant"
+      },
+      {
+        "end": 41,
+        "paren": null,
+        "start": 40,
+        "type": "white-space"
+      },
+      {
+        "end": 47,
+        "paren": null,
+        "start": 41,
+        "type": "constant"
+      },
+      {
+        "end": 48,
+        "paren": null,
+        "start": 47,
+        "type": "white-space"
+      },
+      {
+        "end": 53,
+        "paren": null,
+        "start": 48,
+        "type": "constant"
+      },
+      {
+        "end": 54,
+        "paren": null,
+        "start": 53,
+        "type": "white-space"
+      },
+      {
+        "end": 57,
+        "paren": null,
+        "start": 54,
+        "type": "constant"
+      },
+      {
+        "end": 58,
+        "paren": null,
+        "start": 57,
+        "type": "constant"
+      },
+      {
+        "end": 59,
+        "paren": null,
+        "start": 58,
+        "type": "white-space"
+      },
+      {
+        "end": 63,
+        "paren": null,
+        "start": 59,
+        "type": "error"
+      },
+      {
+        "end": 64,
+        "paren": ")",
+        "start": 63,
+        "type": "parenthesis"
+      },
+      {
+        "end": 65,
+        "paren": null,
+        "start": 64,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "line-comment",
+    "source": "(a) ; a comment with ( unbalanced [ brackets\n(b)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": ")",
+        "start": 2,
+        "type": "parenthesis"
+      },
+      {
+        "end": 4,
+        "paren": null,
+        "start": 3,
+        "type": "white-space"
+      },
+      {
+        "end": 44,
+        "paren": null,
+        "start": 4,
+        "type": "comment"
+      },
+      {
+        "end": 45,
+        "paren": null,
+        "start": 44,
+        "type": "white-space"
+      },
+      {
+        "end": 46,
+        "paren": "(",
+        "start": 45,
+        "type": "parenthesis"
+      },
+      {
+        "end": 47,
+        "paren": null,
+        "start": 46,
+        "type": "symbol"
+      },
+      {
+        "end": 48,
+        "paren": ")",
+        "start": 47,
+        "type": "parenthesis"
+      },
+      {
+        "end": 49,
+        "paren": null,
+        "start": 48,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "nested-block-comment",
+    "source": "#| outer #| inner |# still outer |# (after)\n",
+    "tokens": [
+      {
+        "end": 35,
+        "paren": null,
+        "start": 0,
+        "type": "comment"
+      },
+      {
+        "end": 36,
+        "paren": null,
+        "start": 35,
+        "type": "white-space"
+      },
+      {
+        "end": 37,
+        "paren": "(",
+        "start": 36,
+        "type": "parenthesis"
+      },
+      {
+        "end": 42,
+        "paren": null,
+        "start": 37,
+        "type": "symbol"
+      },
+      {
+        "end": 43,
+        "paren": ")",
+        "start": 42,
+        "type": "parenthesis"
+      },
+      {
+        "end": 44,
+        "paren": null,
+        "start": 43,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "multiline-block-comment",
+    "source": "#| a\n#| b\n|# c\n|# (d)\n",
+    "tokens": [
+      {
+        "end": 17,
+        "paren": null,
+        "start": 0,
+        "type": "comment"
+      },
+      {
+        "end": 18,
+        "paren": null,
+        "start": 17,
+        "type": "white-space"
+      },
+      {
+        "end": 19,
+        "paren": "(",
+        "start": 18,
+        "type": "parenthesis"
+      },
+      {
+        "end": 20,
+        "paren": null,
+        "start": 19,
+        "type": "symbol"
+      },
+      {
+        "end": 21,
+        "paren": ")",
+        "start": 20,
+        "type": "parenthesis"
+      },
+      {
+        "end": 22,
+        "paren": null,
+        "start": 21,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "datum-comment",
+    "source": "(a #;(b c) d #;#;e f g)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 3,
+        "type": "sexp-comment"
+      },
+      {
+        "end": 6,
+        "paren": "(",
+        "start": 5,
+        "type": "parenthesis"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 6,
+        "type": "symbol"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 7,
+        "type": "white-space"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 8,
+        "type": "symbol"
+      },
+      {
+        "end": 10,
+        "paren": ")",
+        "start": 9,
+        "type": "parenthesis"
+      },
+      {
+        "end": 11,
+        "paren": null,
+        "start": 10,
+        "type": "white-space"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 11,
+        "type": "symbol"
+      },
+      {
+        "end": 13,
+        "paren": null,
+        "start": 12,
+        "type": "white-space"
+      },
+      {
+        "end": 15,
+        "paren": null,
+        "start": 13,
+        "type": "sexp-comment"
+      },
+      {
+        "end": 17,
+        "paren": null,
+        "start": 15,
+        "type": "sexp-comment"
+      },
+      {
+        "end": 18,
+        "paren": null,
+        "start": 17,
+        "type": "symbol"
+      },
+      {
+        "end": 19,
+        "paren": null,
+        "start": 18,
+        "type": "white-space"
+      },
+      {
+        "end": 20,
+        "paren": null,
+        "start": 19,
+        "type": "symbol"
+      },
+      {
+        "end": 21,
+        "paren": null,
+        "start": 20,
+        "type": "white-space"
+      },
+      {
+        "end": 22,
+        "paren": null,
+        "start": 21,
+        "type": "symbol"
+      },
+      {
+        "end": 23,
+        "paren": ")",
+        "start": 22,
+        "type": "parenthesis"
+      },
+      {
+        "end": 24,
+        "paren": null,
+        "start": 23,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "string-flavours",
+    "source": "(\"a\" #\"b\" #rx\"c\" #px\"d\" #rx#\"e\" #px#\"f\")\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 4,
+        "paren": null,
+        "start": 1,
+        "type": "string"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 4,
+        "type": "white-space"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 5,
+        "type": "string"
+      },
+      {
+        "end": 10,
+        "paren": null,
+        "start": 9,
+        "type": "white-space"
+      },
+      {
+        "end": 16,
+        "paren": null,
+        "start": 10,
+        "type": "string"
+      },
+      {
+        "end": 17,
+        "paren": null,
+        "start": 16,
+        "type": "white-space"
+      },
+      {
+        "end": 23,
+        "paren": null,
+        "start": 17,
+        "type": "string"
+      },
+      {
+        "end": 24,
+        "paren": null,
+        "start": 23,
+        "type": "white-space"
+      },
+      {
+        "end": 31,
+        "paren": null,
+        "start": 24,
+        "type": "string"
+      },
+      {
+        "end": 32,
+        "paren": null,
+        "start": 31,
+        "type": "white-space"
+      },
+      {
+        "end": 39,
+        "paren": null,
+        "start": 32,
+        "type": "string"
+      },
+      {
+        "end": 40,
+        "paren": ")",
+        "start": 39,
+        "type": "parenthesis"
+      },
+      {
+        "end": 41,
+        "paren": null,
+        "start": 40,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "string-with-brackets",
+    "source": "(\"a (b) [c] \\\" d\" e)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 17,
+        "paren": null,
+        "start": 1,
+        "type": "string"
+      },
+      {
+        "end": 18,
+        "paren": null,
+        "start": 17,
+        "type": "white-space"
+      },
+      {
+        "end": 19,
+        "paren": null,
+        "start": 18,
+        "type": "symbol"
+      },
+      {
+        "end": 20,
+        "paren": ")",
+        "start": 19,
+        "type": "parenthesis"
+      },
+      {
+        "end": 21,
+        "paren": null,
+        "start": 20,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "multiline-string",
+    "source": "(a \"multi\nline (\" b)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 17,
+        "paren": null,
+        "start": 3,
+        "type": "string"
+      },
+      {
+        "end": 18,
+        "paren": null,
+        "start": 17,
+        "type": "white-space"
+      },
+      {
+        "end": 19,
+        "paren": null,
+        "start": 18,
+        "type": "symbol"
+      },
+      {
+        "end": 20,
+        "paren": ")",
+        "start": 19,
+        "type": "parenthesis"
+      },
+      {
+        "end": 21,
+        "paren": null,
+        "start": 20,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "bar-symbols",
+    "source": "(|a(b| c a|b(c|d |a\nb| e)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 6,
+        "type": "white-space"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 7,
+        "type": "symbol"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 8,
+        "type": "white-space"
+      },
+      {
+        "end": 16,
+        "paren": null,
+        "start": 9,
+        "type": "symbol"
+      },
+      {
+        "end": 17,
+        "paren": null,
+        "start": 16,
+        "type": "white-space"
+      },
+      {
+        "end": 22,
+        "paren": null,
+        "start": 17,
+        "type": "symbol"
+      },
+      {
+        "end": 23,
+        "paren": null,
+        "start": 22,
+        "type": "white-space"
+      },
+      {
+        "end": 24,
+        "paren": null,
+        "start": 23,
+        "type": "symbol"
+      },
+      {
+        "end": 25,
+        "paren": ")",
+        "start": 24,
+        "type": "parenthesis"
+      },
+      {
+        "end": 26,
+        "paren": null,
+        "start": 25,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "backslash-escapes",
+    "source": "(a\\(b c\\ d)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 5,
+        "type": "white-space"
+      },
+      {
+        "end": 10,
+        "paren": null,
+        "start": 6,
+        "type": "symbol"
+      },
+      {
+        "end": 11,
+        "paren": ")",
+        "start": 10,
+        "type": "parenthesis"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 11,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "reader-prefixes",
+    "source": "('a `b ,c ,@d #'e #`f #,g #,@h #&i)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "constant"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "symbol"
+      },
+      {
+        "end": 4,
+        "paren": null,
+        "start": 3,
+        "type": "white-space"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 4,
+        "type": "constant"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 5,
+        "type": "symbol"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 6,
+        "type": "white-space"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 7,
+        "type": "other"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 8,
+        "type": "symbol"
+      },
+      {
+        "end": 10,
+        "paren": null,
+        "start": 9,
+        "type": "white-space"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 10,
+        "type": "other"
+      },
+      {
+        "end": 13,
+        "paren": null,
+        "start": 12,
+        "type": "symbol"
+      },
+      {
+        "end": 14,
+        "paren": null,
+        "start": 13,
+        "type": "white-space"
+      },
+      {
+        "end": 16,
+        "paren": null,
+        "start": 14,
+        "type": "constant"
+      },
+      {
+        "end": 17,
+        "paren": null,
+        "start": 16,
+        "type": "symbol"
+      },
+      {
+        "end": 18,
+        "paren": null,
+        "start": 17,
+        "type": "white-space"
+      },
+      {
+        "end": 20,
+        "paren": null,
+        "start": 18,
+        "type": "constant"
+      },
+      {
+        "end": 21,
+        "paren": null,
+        "start": 20,
+        "type": "symbol"
+      },
+      {
+        "end": 22,
+        "paren": null,
+        "start": 21,
+        "type": "white-space"
+      },
+      {
+        "end": 24,
+        "paren": null,
+        "start": 22,
+        "type": "other"
+      },
+      {
+        "end": 25,
+        "paren": null,
+        "start": 24,
+        "type": "symbol"
+      },
+      {
+        "end": 26,
+        "paren": null,
+        "start": 25,
+        "type": "white-space"
+      },
+      {
+        "end": 29,
+        "paren": null,
+        "start": 26,
+        "type": "other"
+      },
+      {
+        "end": 30,
+        "paren": null,
+        "start": 29,
+        "type": "symbol"
+      },
+      {
+        "end": 31,
+        "paren": null,
+        "start": 30,
+        "type": "white-space"
+      },
+      {
+        "end": 33,
+        "paren": null,
+        "start": 31,
+        "type": "constant"
+      },
+      {
+        "end": 34,
+        "paren": null,
+        "start": 33,
+        "type": "symbol"
+      },
+      {
+        "end": 35,
+        "paren": ")",
+        "start": 34,
+        "type": "parenthesis"
+      },
+      {
+        "end": 36,
+        "paren": null,
+        "start": 35,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "keywords-and-hash-percent",
+    "source": "(#:kw #%app #%module-begin #t #f #true #false)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 1,
+        "type": "hash-colon-keyword"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 5,
+        "type": "white-space"
+      },
+      {
+        "end": 11,
+        "paren": null,
+        "start": 6,
+        "type": "symbol"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 11,
+        "type": "white-space"
+      },
+      {
+        "end": 26,
+        "paren": null,
+        "start": 12,
+        "type": "symbol"
+      },
+      {
+        "end": 27,
+        "paren": null,
+        "start": 26,
+        "type": "white-space"
+      },
+      {
+        "end": 29,
+        "paren": null,
+        "start": 27,
+        "type": "constant"
+      },
+      {
+        "end": 30,
+        "paren": null,
+        "start": 29,
+        "type": "white-space"
+      },
+      {
+        "end": 32,
+        "paren": null,
+        "start": 30,
+        "type": "constant"
+      },
+      {
+        "end": 33,
+        "paren": null,
+        "start": 32,
+        "type": "white-space"
+      },
+      {
+        "end": 38,
+        "paren": null,
+        "start": 33,
+        "type": "constant"
+      },
+      {
+        "end": 39,
+        "paren": null,
+        "start": 38,
+        "type": "white-space"
+      },
+      {
+        "end": 45,
+        "paren": null,
+        "start": 39,
+        "type": "constant"
+      },
+      {
+        "end": 46,
+        "paren": ")",
+        "start": 45,
+        "type": "parenthesis"
+      },
+      {
+        "end": 47,
+        "paren": null,
+        "start": 46,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "numbers",
+    "source": "(1 -2 3.0 1/2 #x1F #b1010 #o777 #e1.0 #i1.0 +inf.0 -nan.0 1e10)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "constant"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 3,
+        "type": "constant"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 5,
+        "type": "white-space"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 6,
+        "type": "constant"
+      },
+      {
+        "end": 10,
+        "paren": null,
+        "start": 9,
+        "type": "white-space"
+      },
+      {
+        "end": 13,
+        "paren": null,
+        "start": 10,
+        "type": "constant"
+      },
+      {
+        "end": 14,
+        "paren": null,
+        "start": 13,
+        "type": "white-space"
+      },
+      {
+        "end": 18,
+        "paren": null,
+        "start": 14,
+        "type": "constant"
+      },
+      {
+        "end": 19,
+        "paren": null,
+        "start": 18,
+        "type": "white-space"
+      },
+      {
+        "end": 25,
+        "paren": null,
+        "start": 19,
+        "type": "constant"
+      },
+      {
+        "end": 26,
+        "paren": null,
+        "start": 25,
+        "type": "white-space"
+      },
+      {
+        "end": 31,
+        "paren": null,
+        "start": 26,
+        "type": "constant"
+      },
+      {
+        "end": 32,
+        "paren": null,
+        "start": 31,
+        "type": "white-space"
+      },
+      {
+        "end": 37,
+        "paren": null,
+        "start": 32,
+        "type": "constant"
+      },
+      {
+        "end": 38,
+        "paren": null,
+        "start": 37,
+        "type": "white-space"
+      },
+      {
+        "end": 43,
+        "paren": null,
+        "start": 38,
+        "type": "constant"
+      },
+      {
+        "end": 44,
+        "paren": null,
+        "start": 43,
+        "type": "white-space"
+      },
+      {
+        "end": 50,
+        "paren": null,
+        "start": 44,
+        "type": "constant"
+      },
+      {
+        "end": 51,
+        "paren": null,
+        "start": 50,
+        "type": "white-space"
+      },
+      {
+        "end": 57,
+        "paren": null,
+        "start": 51,
+        "type": "constant"
+      },
+      {
+        "end": 58,
+        "paren": null,
+        "start": 57,
+        "type": "white-space"
+      },
+      {
+        "end": 62,
+        "paren": null,
+        "start": 58,
+        "type": "constant"
+      },
+      {
+        "end": 63,
+        "paren": ")",
+        "start": 62,
+        "type": "parenthesis"
+      },
+      {
+        "end": 64,
+        "paren": null,
+        "start": 63,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "lang-line",
+    "source": "#lang racket/base\n(a)\n",
+    "tokens": [
+      {
+        "end": 17,
+        "paren": null,
+        "start": 0,
+        "type": "other"
+      },
+      {
+        "end": 18,
+        "paren": null,
+        "start": 17,
+        "type": "white-space"
+      },
+      {
+        "end": 19,
+        "paren": "(",
+        "start": 18,
+        "type": "parenthesis"
+      },
+      {
+        "end": 20,
+        "paren": null,
+        "start": 19,
+        "type": "symbol"
+      },
+      {
+        "end": 21,
+        "paren": ")",
+        "start": 20,
+        "type": "parenthesis"
+      },
+      {
+        "end": 22,
+        "paren": null,
+        "start": 21,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "script-line",
+    "source": "#!/usr/bin/env racket\n#lang racket\n(a)\n",
+    "tokens": [
+      {
+        "end": 21,
+        "paren": null,
+        "start": 0,
+        "type": "comment"
+      },
+      {
+        "end": 22,
+        "paren": null,
+        "start": 21,
+        "type": "white-space"
+      },
+      {
+        "end": 34,
+        "paren": null,
+        "start": 22,
+        "type": "other"
+      },
+      {
+        "end": 35,
+        "paren": null,
+        "start": 34,
+        "type": "white-space"
+      },
+      {
+        "end": 36,
+        "paren": "(",
+        "start": 35,
+        "type": "parenthesis"
+      },
+      {
+        "end": 37,
+        "paren": null,
+        "start": 36,
+        "type": "symbol"
+      },
+      {
+        "end": 38,
+        "paren": ")",
+        "start": 37,
+        "type": "parenthesis"
+      },
+      {
+        "end": 39,
+        "paren": null,
+        "start": 38,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "here-string",
+    "source": "(a #<<END\nbody ( unbalanced [ text\nEND\n (b))\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 38,
+        "paren": null,
+        "start": 3,
+        "type": "string"
+      },
+      {
+        "end": 40,
+        "paren": null,
+        "start": 38,
+        "type": "white-space"
+      },
+      {
+        "end": 41,
+        "paren": "(",
+        "start": 40,
+        "type": "parenthesis"
+      },
+      {
+        "end": 42,
+        "paren": null,
+        "start": 41,
+        "type": "symbol"
+      },
+      {
+        "end": 43,
+        "paren": ")",
+        "start": 42,
+        "type": "parenthesis"
+      },
+      {
+        "end": 44,
+        "paren": ")",
+        "start": 43,
+        "type": "parenthesis"
+      },
+      {
+        "end": 45,
+        "paren": null,
+        "start": 44,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "here-string-empty-tag",
+    "source": "(a #<<\ntext\n\n (b))\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 3,
+        "type": "error"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 6,
+        "type": "white-space"
+      },
+      {
+        "end": 11,
+        "paren": null,
+        "start": 7,
+        "type": "symbol"
+      },
+      {
+        "end": 14,
+        "paren": null,
+        "start": 11,
+        "type": "white-space"
+      },
+      {
+        "end": 15,
+        "paren": "(",
+        "start": 14,
+        "type": "parenthesis"
+      },
+      {
+        "end": 16,
+        "paren": null,
+        "start": 15,
+        "type": "symbol"
+      },
+      {
+        "end": 17,
+        "paren": ")",
+        "start": 16,
+        "type": "parenthesis"
+      },
+      {
+        "end": 18,
+        "paren": ")",
+        "start": 17,
+        "type": "parenthesis"
+      },
+      {
+        "end": 19,
+        "paren": null,
+        "start": 18,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "astral-characters",
+    "source": "(\"🔒\" #\\𝔸 |💥| a)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 4,
+        "paren": null,
+        "start": 1,
+        "type": "string"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 4,
+        "type": "white-space"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 5,
+        "type": "constant"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 8,
+        "type": "white-space"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 9,
+        "type": "symbol"
+      },
+      {
+        "end": 13,
+        "paren": null,
+        "start": 12,
+        "type": "white-space"
+      },
+      {
+        "end": 14,
+        "paren": null,
+        "start": 13,
+        "type": "symbol"
+      },
+      {
+        "end": 15,
+        "paren": ")",
+        "start": 14,
+        "type": "parenthesis"
+      },
+      {
+        "end": 16,
+        "paren": null,
+        "start": 15,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "unterminated-string",
+    "source": "(a \"oops\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 3,
+        "type": "error"
+      }
+    ]
+  },
+  {
+    "name": "unterminated-block-comment",
+    "source": "(a #| oops\nstill\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 17,
+        "paren": null,
+        "start": 3,
+        "type": "error"
+      }
+    ]
+  },
+  {
+    "name": "unterminated-bar",
+    "source": "(a |oops\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 3,
+        "type": "error"
+      }
+    ]
+  },
+  {
+    "name": "redex-shaped-form",
+    "source": "#lang racket\n(define-language L\n  [e ::= (e e) x (lambda (x) e)]\n  [x ::= variable-not-otherwise-mentioned])\n(reduction-relation\n L\n (--> (in-hole E ((lambda (x) e) v)) (in-hole E (subst x v e)) \"beta\"))\n",
+    "tokens": [
+      {
+        "end": 12,
+        "paren": null,
+        "start": 0,
+        "type": "other"
+      },
+      {
+        "end": 13,
+        "paren": null,
+        "start": 12,
+        "type": "white-space"
+      },
+      {
+        "end": 14,
+        "paren": "(",
+        "start": 13,
+        "type": "parenthesis"
+      },
+      {
+        "end": 29,
+        "paren": null,
+        "start": 14,
+        "type": "symbol"
+      },
+      {
+        "end": 30,
+        "paren": null,
+        "start": 29,
+        "type": "white-space"
+      },
+      {
+        "end": 31,
+        "paren": null,
+        "start": 30,
+        "type": "symbol"
+      },
+      {
+        "end": 34,
+        "paren": null,
+        "start": 31,
+        "type": "white-space"
+      },
+      {
+        "end": 35,
+        "paren": "[",
+        "start": 34,
+        "type": "parenthesis"
+      },
+      {
+        "end": 36,
+        "paren": null,
+        "start": 35,
+        "type": "symbol"
+      },
+      {
+        "end": 37,
+        "paren": null,
+        "start": 36,
+        "type": "white-space"
+      },
+      {
+        "end": 40,
+        "paren": null,
+        "start": 37,
+        "type": "symbol"
+      },
+      {
+        "end": 41,
+        "paren": null,
+        "start": 40,
+        "type": "white-space"
+      },
+      {
+        "end": 42,
+        "paren": "(",
+        "start": 41,
+        "type": "parenthesis"
+      },
+      {
+        "end": 43,
+        "paren": null,
+        "start": 42,
+        "type": "symbol"
+      },
+      {
+        "end": 44,
+        "paren": null,
+        "start": 43,
+        "type": "white-space"
+      },
+      {
+        "end": 45,
+        "paren": null,
+        "start": 44,
+        "type": "symbol"
+      },
+      {
+        "end": 46,
+        "paren": ")",
+        "start": 45,
+        "type": "parenthesis"
+      },
+      {
+        "end": 47,
+        "paren": null,
+        "start": 46,
+        "type": "white-space"
+      },
+      {
+        "end": 48,
+        "paren": null,
+        "start": 47,
+        "type": "symbol"
+      },
+      {
+        "end": 49,
+        "paren": null,
+        "start": 48,
+        "type": "white-space"
+      },
+      {
+        "end": 50,
+        "paren": "(",
+        "start": 49,
+        "type": "parenthesis"
+      },
+      {
+        "end": 56,
+        "paren": null,
+        "start": 50,
+        "type": "symbol"
+      },
+      {
+        "end": 57,
+        "paren": null,
+        "start": 56,
+        "type": "white-space"
+      },
+      {
+        "end": 58,
+        "paren": "(",
+        "start": 57,
+        "type": "parenthesis"
+      },
+      {
+        "end": 59,
+        "paren": null,
+        "start": 58,
+        "type": "symbol"
+      },
+      {
+        "end": 60,
+        "paren": ")",
+        "start": 59,
+        "type": "parenthesis"
+      },
+      {
+        "end": 61,
+        "paren": null,
+        "start": 60,
+        "type": "white-space"
+      },
+      {
+        "end": 62,
+        "paren": null,
+        "start": 61,
+        "type": "symbol"
+      },
+      {
+        "end": 63,
+        "paren": ")",
+        "start": 62,
+        "type": "parenthesis"
+      },
+      {
+        "end": 64,
+        "paren": "]",
+        "start": 63,
+        "type": "parenthesis"
+      },
+      {
+        "end": 67,
+        "paren": null,
+        "start": 64,
+        "type": "white-space"
+      },
+      {
+        "end": 68,
+        "paren": "[",
+        "start": 67,
+        "type": "parenthesis"
+      },
+      {
+        "end": 69,
+        "paren": null,
+        "start": 68,
+        "type": "symbol"
+      },
+      {
+        "end": 70,
+        "paren": null,
+        "start": 69,
+        "type": "white-space"
+      },
+      {
+        "end": 73,
+        "paren": null,
+        "start": 70,
+        "type": "symbol"
+      },
+      {
+        "end": 74,
+        "paren": null,
+        "start": 73,
+        "type": "white-space"
+      },
+      {
+        "end": 106,
+        "paren": null,
+        "start": 74,
+        "type": "symbol"
+      },
+      {
+        "end": 107,
+        "paren": "]",
+        "start": 106,
+        "type": "parenthesis"
+      },
+      {
+        "end": 108,
+        "paren": ")",
+        "start": 107,
+        "type": "parenthesis"
+      },
+      {
+        "end": 109,
+        "paren": null,
+        "start": 108,
+        "type": "white-space"
+      },
+      {
+        "end": 110,
+        "paren": "(",
+        "start": 109,
+        "type": "parenthesis"
+      },
+      {
+        "end": 128,
+        "paren": null,
+        "start": 110,
+        "type": "symbol"
+      },
+      {
+        "end": 130,
+        "paren": null,
+        "start": 128,
+        "type": "white-space"
+      },
+      {
+        "end": 131,
+        "paren": null,
+        "start": 130,
+        "type": "symbol"
+      },
+      {
+        "end": 133,
+        "paren": null,
+        "start": 131,
+        "type": "white-space"
+      },
+      {
+        "end": 134,
+        "paren": "(",
+        "start": 133,
+        "type": "parenthesis"
+      },
+      {
+        "end": 137,
+        "paren": null,
+        "start": 134,
+        "type": "symbol"
+      },
+      {
+        "end": 138,
+        "paren": null,
+        "start": 137,
+        "type": "white-space"
+      },
+      {
+        "end": 139,
+        "paren": "(",
+        "start": 138,
+        "type": "parenthesis"
+      },
+      {
+        "end": 146,
+        "paren": null,
+        "start": 139,
+        "type": "symbol"
+      },
+      {
+        "end": 147,
+        "paren": null,
+        "start": 146,
+        "type": "white-space"
+      },
+      {
+        "end": 148,
+        "paren": null,
+        "start": 147,
+        "type": "symbol"
+      },
+      {
+        "end": 149,
+        "paren": null,
+        "start": 148,
+        "type": "white-space"
+      },
+      {
+        "end": 150,
+        "paren": "(",
+        "start": 149,
+        "type": "parenthesis"
+      },
+      {
+        "end": 151,
+        "paren": "(",
+        "start": 150,
+        "type": "parenthesis"
+      },
+      {
+        "end": 157,
+        "paren": null,
+        "start": 151,
+        "type": "symbol"
+      },
+      {
+        "end": 158,
+        "paren": null,
+        "start": 157,
+        "type": "white-space"
+      },
+      {
+        "end": 159,
+        "paren": "(",
+        "start": 158,
+        "type": "parenthesis"
+      },
+      {
+        "end": 160,
+        "paren": null,
+        "start": 159,
+        "type": "symbol"
+      },
+      {
+        "end": 161,
+        "paren": ")",
+        "start": 160,
+        "type": "parenthesis"
+      },
+      {
+        "end": 162,
+        "paren": null,
+        "start": 161,
+        "type": "white-space"
+      },
+      {
+        "end": 163,
+        "paren": null,
+        "start": 162,
+        "type": "symbol"
+      },
+      {
+        "end": 164,
+        "paren": ")",
+        "start": 163,
+        "type": "parenthesis"
+      },
+      {
+        "end": 165,
+        "paren": null,
+        "start": 164,
+        "type": "white-space"
+      },
+      {
+        "end": 166,
+        "paren": null,
+        "start": 165,
+        "type": "symbol"
+      },
+      {
+        "end": 167,
+        "paren": ")",
+        "start": 166,
+        "type": "parenthesis"
+      },
+      {
+        "end": 168,
+        "paren": ")",
+        "start": 167,
+        "type": "parenthesis"
+      },
+      {
+        "end": 169,
+        "paren": null,
+        "start": 168,
+        "type": "white-space"
+      },
+      {
+        "end": 170,
+        "paren": "(",
+        "start": 169,
+        "type": "parenthesis"
+      },
+      {
+        "end": 177,
+        "paren": null,
+        "start": 170,
+        "type": "symbol"
+      },
+      {
+        "end": 178,
+        "paren": null,
+        "start": 177,
+        "type": "white-space"
+      },
+      {
+        "end": 179,
+        "paren": null,
+        "start": 178,
+        "type": "symbol"
+      },
+      {
+        "end": 180,
+        "paren": null,
+        "start": 179,
+        "type": "white-space"
+      },
+      {
+        "end": 181,
+        "paren": "(",
+        "start": 180,
+        "type": "parenthesis"
+      },
+      {
+        "end": 186,
+        "paren": null,
+        "start": 181,
+        "type": "symbol"
+      },
+      {
+        "end": 187,
+        "paren": null,
+        "start": 186,
+        "type": "white-space"
+      },
+      {
+        "end": 188,
+        "paren": null,
+        "start": 187,
+        "type": "symbol"
+      },
+      {
+        "end": 189,
+        "paren": null,
+        "start": 188,
+        "type": "white-space"
+      },
+      {
+        "end": 190,
+        "paren": null,
+        "start": 189,
+        "type": "symbol"
+      },
+      {
+        "end": 191,
+        "paren": null,
+        "start": 190,
+        "type": "white-space"
+      },
+      {
+        "end": 192,
+        "paren": null,
+        "start": 191,
+        "type": "symbol"
+      },
+      {
+        "end": 193,
+        "paren": ")",
+        "start": 192,
+        "type": "parenthesis"
+      },
+      {
+        "end": 194,
+        "paren": ")",
+        "start": 193,
+        "type": "parenthesis"
+      },
+      {
+        "end": 195,
+        "paren": null,
+        "start": 194,
+        "type": "white-space"
+      },
+      {
+        "end": 201,
+        "paren": null,
+        "start": 195,
+        "type": "string"
+      },
+      {
+        "end": 202,
+        "paren": ")",
+        "start": 201,
+        "type": "parenthesis"
+      },
+      {
+        "end": 203,
+        "paren": ")",
+        "start": 202,
+        "type": "parenthesis"
+      },
+      {
+        "end": 204,
+        "paren": null,
+        "start": 203,
+        "type": "white-space"
+      }
+    ]
+  }
+]

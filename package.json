@@ -1,7 +1,7 @@
 {
   "name": "paredit-redex",
   "displayName": "Paredit for Racket",
-  "description": "Structural editing (paredit) for Racket, Scheme and Lisp — slurp, barf, splice, raise, wrap, with the canonical Emacs keymap.",
+  "description": "Structural editing (paredit) for Racket, Scheme and Lisp \u2014 slurp, barf, splice, raise, wrap, with the canonical Emacs keymap.",
   "version": "0.0.1",
   "publisher": "KaiErikNiermann",
   "license": "MIT",
@@ -45,10 +45,11 @@
     "lint:eslint": "eslint .",
     "lint:types": "tsc --noEmit",
     "test": "vitest run",
-    "test:oracle": "node --experimental-strip-types test/oracle/generate.ts",
+    "test:oracle": "vitest run --config vitest.oracle.mts",
     "test:vscode": "vscode-test",
     "prepare": "husky",
-    "package": "vsce package --no-dependencies --allow-unused-files-pattern --allow-missing-repository"
+    "package": "vsce package --no-dependencies --allow-unused-files-pattern --allow-missing-repository",
+    "test:fixtures": "node test/oracle/generate.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

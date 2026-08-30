@@ -1,0 +1,98 @@
+[
+  {
+    "name": "bare-brackets",
+    "source": "(a [b] {c})\n"
+  },
+  {
+    "name": "list-prefixes",
+    "source": "(#(1 2) #3(a) #hash((a . 1)) #hasheq() #hasheqv() #hashalw() #s(pt 1 2))\n"
+  },
+  {
+    "name": "char-literals",
+    "source": "(#\\( #\\) #\\; #\\\" #\\space #\\newline #\\nul #\\u3BB #\\101 #\\a1 #\\ab)\n"
+  },
+  {
+    "name": "line-comment",
+    "source": "(a) ; a comment with ( unbalanced [ brackets\n(b)\n"
+  },
+  {
+    "name": "nested-block-comment",
+    "source": "#| outer #| inner |# still outer |# (after)\n"
+  },
+  {
+    "name": "multiline-block-comment",
+    "source": "#| a\n#| b\n|# c\n|# (d)\n"
+  },
+  {
+    "name": "datum-comment",
+    "source": "(a #;(b c) d #;#;e f g)\n"
+  },
+  {
+    "name": "string-flavours",
+    "source": "(\"a\" #\"b\" #rx\"c\" #px\"d\" #rx#\"e\" #px#\"f\")\n"
+  },
+  {
+    "name": "string-with-brackets",
+    "source": "(\"a (b) [c] \\\" d\" e)\n"
+  },
+  {
+    "name": "multiline-string",
+    "source": "(a \"multi\nline (\" b)\n"
+  },
+  {
+    "name": "bar-symbols",
+    "source": "(|a(b| c a|b(c|d |a\nb| e)\n"
+  },
+  {
+    "name": "backslash-escapes",
+    "source": "(a\\(b c\\ d)\n"
+  },
+  {
+    "name": "reader-prefixes",
+    "source": "('a `b ,c ,@d #'e #`f #,g #,@h #&i)\n"
+  },
+  {
+    "name": "keywords-and-hash-percent",
+    "source": "(#:kw #%app #%module-begin #t #f #true #false)\n"
+  },
+  {
+    "name": "numbers",
+    "source": "(1 -2 3.0 1/2 #x1F #b1010 #o777 #e1.0 #i1.0 +inf.0 -nan.0 1e10)\n"
+  },
+  {
+    "name": "lang-line",
+    "source": "#lang racket/base\n(a)\n"
+  },
+  {
+    "name": "script-line",
+    "source": "#!/usr/bin/env racket\n#lang racket\n(a)\n"
+  },
+  {
+    "name": "here-string",
+    "source": "(a #<<END\nbody ( unbalanced [ text\nEND\n (b))\n"
+  },
+  {
+    "name": "here-string-empty-tag",
+    "source": "(a #<<\ntext\n\n (b))\n"
+  },
+  {
+    "name": "astral-characters",
+    "source": "(\"🔒\" #\\𝔸 |💥| a)\n"
+  },
+  {
+    "name": "unterminated-string",
+    "source": "(a \"oops\n"
+  },
+  {
+    "name": "unterminated-block-comment",
+    "source": "(a #| oops\nstill\n"
+  },
+  {
+    "name": "unterminated-bar",
+    "source": "(a |oops\n"
+  },
+  {
+    "name": "redex-shaped-form",
+    "source": "#lang racket\n(define-language L\n  [e ::= (e e) x (lambda (x) e)]\n  [x ::= variable-not-otherwise-mentioned])\n(reduction-relation\n L\n (--> (in-hole E ((lambda (x) e) v)) (in-hole E (subst x v e)) \"beta\"))\n"
+  }
+]

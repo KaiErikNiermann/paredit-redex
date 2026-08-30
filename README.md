@@ -46,15 +46,32 @@ handles:
 - `|bar symbols|` — pipes quote everything, including brackets, and may appear mid-symbol
 - `#rx"..."`, `#px"..."`, `#"..."` — prefixed string flavours
 - `#(`, `#hash(`, `#s(` — prefixed opens, where the delimiter lexeme is longer than one character
+- `#<<TAG` here strings, whose body runs to a line equal to `TAG` and whose brackets are text
+- `#!` script lines, which are comments rather than data
 
-Known gaps: `@`-expressions (Scribble text bodies) and here-strings (`#<<EOF`) are lexed as ordinary
-data rather than understood.
+Known gap: `@`-expressions (Scribble text bodies), where `{...}` delimits text rather than a
+datum, are lexed as ordinary data rather than understood.
 
 ### Correctness
 
-The lexer is differentially tested against Racket's own `syntax-color/racket-lexer`: an oracle
-script drives the real lexer over a corpus and the results are compared token for token. The token
-model deliberately copies that lexer's conventions so the comparison needs no normalisation.
+The lexer is differentially tested against Racket's own `syntax-color/racket-lexer`. An oracle
+script drives the real lexer and both streams are projected onto a common set of structural classes,
+then compared token for token — every boundary must agree.
+
+`pnpm test:oracle` runs that comparison over **every `.rkt` file in the local Racket installation**
+(5290 of them, ~25s) and currently reports no divergence. `pnpm test` runs it over committed
+fixtures instead, so neither CI nor a contributor needs Racket installed; `pnpm test:fixtures`
+regenerates those from `test/oracle/cases.json`.
+
+The comparison is deliberately not an identity check, because the two token models are not the same
+one. Four differences are reconciled rather than treated as failures, each for a stated reason:
+
+| Difference | Why |
+|---|---|
+| adjacent same-class tokens are coalesced | this lexer is line-at-a-time; Racket reports a multi-line string, comment or whitespace run as one token |
+| Racket's atom flavours collapse to one class | `symbol`, `constant`, `other`, `hash-colon-keyword` are distinctions paredit has no use for — and Racket reports the quoting prefixes among them |
+| offsets are remapped to UTF-16 | Racket counts code points, JavaScript and VS Code count code units, so any file with an emoji has two offset systems |
+| spans Racket calls `error` compare on boundaries only | error recovery is where two independent lexers are entitled to differ |
 
 ## Requirements
 
