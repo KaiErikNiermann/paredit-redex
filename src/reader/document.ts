@@ -66,6 +66,11 @@ export class TokenizedDocument {
     return this.#lines.join("\n");
   }
 
+  /** Length in characters, counting the newline between each pair of lines. */
+  get length(): number {
+    return this.#totalLength();
+  }
+
   /** Absolute offset of the first character of `line`. */
   lineStart(line: number): number {
     const starts = (this.#lineStarts ??= this.#computeLineStarts());

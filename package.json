@@ -35,8 +35,70 @@
     "package.json"
   ],
   "contributes": {
-    "commands": [],
-    "keybindings": []
+    "commands": [
+      {
+        "command": "paredit-redex.forwardSexp",
+        "title": "Forward Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.backwardSexp",
+        "title": "Backward Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.forwardUpSexp",
+        "title": "Forward Up Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.backwardUpSexp",
+        "title": "Backward Up Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.forwardDownSexp",
+        "title": "Forward Down Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.backwardDownSexp",
+        "title": "Backward Down Sexp",
+        "category": "Paredit"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "paredit-redex.forwardSexp",
+        "key": "ctrl+alt+f",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
+      },
+      {
+        "command": "paredit-redex.backwardSexp",
+        "key": "ctrl+alt+b",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
+      },
+      {
+        "command": "paredit-redex.forwardUpSexp",
+        "key": "ctrl+alt+n",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
+      },
+      {
+        "command": "paredit-redex.backwardUpSexp",
+        "key": "ctrl+alt+u",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
+      },
+      {
+        "command": "paredit-redex.forwardDownSexp",
+        "key": "ctrl+alt+d",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
+      },
+      {
+        "command": "paredit-redex.backwardDownSexp",
+        "key": "ctrl+alt+p",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
+      }
+    ]
   },
   "scripts": {
     "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",

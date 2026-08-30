@@ -19,3 +19,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   line up to the first line whose lexer state is unchanged.
 - Structural motion over the token stream (`src/reader/cursor.ts`): forward/backward over a datum,
   in and out of lists, enclosing-list spans, and string/comment context predicates.
+- Six navigation commands on the canonical paredit keys: `ctrl+alt+f`/`b` over a datum,
+  `ctrl+alt+u`/`n` out of a list, `ctrl+alt+d`/`p` into one. Multi-cursor aware.
