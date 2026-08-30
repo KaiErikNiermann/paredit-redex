@@ -1,0 +1,42 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    labels:
+      - dependencies
+    commit-message:
+      prefix: build
+      include: scope
+    groups:
+      # Minor and patch bumps arrive as one PR; majors stay separate so each can
+      # be judged on its own.
+      dev-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # Deliberately pinned to match `engines.vscode`. The `~` keeps @types/vscode
+      # from ever describing an API newer than the oldest editor this extension
+      # claims to support, and letting it drift would silently break that
+      # guarantee — the types would compile against APIs the declared minimum
+      # does not have. Raise both together, by hand, when the floor moves.
+      - dependency-name: "@types/vscode"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels:
+      - dependencies
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns:
+          - "*"
