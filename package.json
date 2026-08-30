@@ -1,0 +1,70 @@
+{
+  "name": "paredit-redex",
+  "displayName": "Paredit for Racket",
+  "description": "Structural editing (paredit) for Racket, Scheme and Lisp — slurp, barf, splice, raise, wrap, with the canonical Emacs keymap.",
+  "version": "0.0.1",
+  "publisher": "KaiErikNiermann",
+  "license": "MIT",
+  "packageManager": "pnpm@10.14.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Keymaps"
+  ],
+  "keywords": [
+    "racket",
+    "paredit",
+    "scheme",
+    "lisp",
+    "structural editing"
+  ],
+  "activationEvents": [
+    "onLanguage:racket",
+    "onLanguage:scheme",
+    "onLanguage:lisp",
+    "onLanguage:commonlisp"
+  ],
+  "main": "./dist/extension.js",
+  "files": [
+    "dist/**",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "contributes": {
+    "commands": [],
+    "keybindings": []
+  },
+  "scripts": {
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+    "watch": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --watch",
+    "lint": "pnpm lint:eslint && pnpm lint:types",
+    "lint:eslint": "eslint .",
+    "lint:types": "tsc --noEmit",
+    "test": "vitest run",
+    "test:oracle": "node --experimental-strip-types test/oracle/generate.ts",
+    "test:vscode": "vscode-test",
+    "prepare": "husky",
+    "package": "vsce package --no-dependencies --allow-unused-files-pattern --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.2.0",
+    "@types/vscode": "~1.85.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.8.1",
+    "eslint-plugin-security": "^4.0.1",
+    "eslint-plugin-sonarjs": "^4.2.0",
+    "eslint-plugin-unicorn": "^73.0.0",
+    "husky": "^9.1.7",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0",
+    "vitest": "^4.1.10"
+  }
+}

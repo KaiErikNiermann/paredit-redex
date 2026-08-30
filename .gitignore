@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.vscode-test/
+*.vsix
+coverage/
+.DS_Store
+pnpm-debug.log*
+.husky/_/
+.remember/
