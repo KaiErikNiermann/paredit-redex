@@ -68,7 +68,7 @@ export default tseslint.config(
     // read its source tree; resolving `racket` and `find` through PATH and
     // reading paths built at runtime is the job, not an oversight. It never
     // ships — nothing in dist/ imports it.
-    files: ["src/**/oracle-corpus.test.ts"],
+    files: ["src/**/oracle-corpus.test.ts", "src/**/oracle-diff.test.ts"],
     rules: {
       "sonarjs/no-os-command-from-path": "off",
       "security/detect-non-literal-fs-filename": "off"
