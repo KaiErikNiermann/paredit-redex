@@ -9,7 +9,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import type { OracleToken, Span } from "./oracle-diff";
-import { diffSpans, lexSourceToSpans, oracleToSpans } from "./oracle-diff";
+import { compareLexers } from "./oracle-diff";
 
 const CORPUS_ROOTS = ["/usr/share/racket/pkgs", "/usr/share/racket/collects"];
 const MAX_FILES = 10_000;
@@ -71,10 +71,7 @@ describe.skipIf(!hasRacket())("differential sweep against syntax-color/racket-le
       for (const record of runOracle(files.slice(offset, offset + 400))) {
         // Matches the normalisation lex.rkt applies; see the note there.
         const source = readFileSync(record.file, "utf8").replaceAll("\r\n", "\n");
-        const mismatches = diffSpans(
-          oracleToSpans(record.tokens, source),
-          lexSourceToSpans(source),
-        );
+        const mismatches = compareLexers(source, record.tokens);
         compared += 1;
         if (mismatches.length > 0 && failures.length < 20) {
           const first = mismatches[0];

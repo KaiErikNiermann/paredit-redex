@@ -128,6 +128,11 @@ export function coalesce(spans: readonly Span[]): Span[] {
  * with the terminator already stripped.
  */
 export function lexSourceToSpans(source: string): Span[] {
+  return coalesce(lexSourceToRawSpans(source));
+}
+
+/** As `lexSourceToSpans`, but one span per token rather than merged. */
+export function lexSourceToRawSpans(source: string): Span[] {
   const spans: Span[] = [];
   const lines = source.split("\n");
   let state = DEFAULT_STATE;
@@ -153,7 +158,7 @@ export function lexSourceToSpans(source: string): Span[] {
     }
   }
 
-  return coalesce(spans);
+  return spans;
 }
 
 function newlineClass(state: typeof DEFAULT_STATE): DiffClass {
@@ -162,10 +167,13 @@ function newlineClass(state: typeof DEFAULT_STATE): DiffClass {
     case "here-string": {
       return "string";
     }
-    case "block-comment": {
+    case "block-comment":
+    case "script-line": {
       return "comment";
     }
-    case "bar": {
+    case "bar":
+    case "pending-char":
+    case "atom-continuation": {
       return "atom";
     }
     case "default": {
@@ -202,17 +210,74 @@ function codePointOffsets(source: string): Int32Array | undefined {
 }
 
 export function oracleToSpans(tokens: readonly OracleToken[], source: string): Span[] {
+  return coalesce(oracleToRawSpans(tokens, source));
+}
+
+/** As `oracleToSpans`, but one span per token rather than merged. */
+export function oracleToRawSpans(
+  tokens: readonly OracleToken[],
+  source: string,
+): Span[] {
   const offsets = codePointOffsets(source);
   const at = (position: number): number =>
     offsets === undefined ? position : (offsets[position] ?? source.length);
 
-  return coalesce(
-    tokens.map((token) => ({
-      cls: oracleClass(token),
-      start: at(token.start),
-      end: at(token.end),
-    })),
-  );
+  return tokens.map((token) => ({
+    cls: oracleClass(token),
+    start: at(token.start),
+    end: at(token.end),
+  }));
+}
+
+/**
+ * Give each span Racket calls an error whatever class this lexer gives it.
+ *
+ * The two lexers are entitled to disagree about what to *call* a malformed
+ * region, and they do: for `#\#|(` both split at the same two places, but Racket
+ * calls the trailing `|(` an error where this lexer calls it an atom. Left
+ * alone, that difference in name becomes a difference in *shape*, because
+ * coalescing merges neighbours of equal class — this lexer's two atoms merge and
+ * Racket's constant-then-error does not, and the comparison reports a boundary
+ * mismatch that is not one.
+ *
+ * The extent of the error region is still compared. Only its name is conceded,
+ * and only where Racket has already declared the input malformed.
+ *
+ * This lexer cannot simply agree and call it an error, either: a bar-quoted
+ * symbol that closes on a later line is perfectly valid, and a lexer that works
+ * a line at a time cannot know at the end of one line whether the next will
+ * close it.
+ */
+export function adoptErrorClasses(
+  oracleSpans: readonly Span[],
+  ownSpans: readonly Span[],
+): Span[] {
+  let index = 0;
+  return oracleSpans.map((span) => {
+    if (span.cls !== "error") {
+      return span;
+    }
+    while (index < ownSpans.length && (ownSpans[index]?.end ?? 0) <= span.start) {
+      index += 1;
+    }
+    const overlapping = ownSpans[index];
+    return overlapping === undefined ? span : { ...span, cls: overlapping.cls };
+  });
+}
+
+/**
+ * Compare this lexer against Racket's on one source.
+ *
+ * The single entry point the fixture, corpus and fuzz tests all use, so that
+ * they cannot drift into comparing different things.
+ */
+export function compareLexers(
+  source: string,
+  oracleTokens: readonly OracleToken[],
+): Mismatch[] {
+  const own = lexSourceToRawSpans(source);
+  const oracle = adoptErrorClasses(oracleToRawSpans(oracleTokens, source), own);
+  return diffSpans(coalesce(oracle), coalesce(own));
 }
 
 export interface Mismatch {

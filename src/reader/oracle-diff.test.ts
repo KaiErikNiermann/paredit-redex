@@ -2,13 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import type { OracleToken, Span } from "./oracle-diff";
-import {
-  coalesce,
-  diffSpans,
-  lexSourceToSpans,
-  oracleClass,
-  oracleToSpans,
-} from "./oracle-diff";
+import { adoptErrorClasses, coalesce, compareLexers, oracleClass } from "./oracle-diff";
 
 interface Fixture {
   readonly name: string;
@@ -62,6 +56,44 @@ describe("coalesce", () => {
   });
 });
 
+describe("adoptErrorClasses", () => {
+  // `#\#|(` is the case that motivated this: both lexers split at 0..3 and
+  // 3..5, but Racket calls the trailing `|(` an error where this lexer calls it
+  // an atom. Without alignment that name difference becomes a shape difference,
+  // because coalescing then merges this lexer's two atoms and not Racket's pair.
+  it("lets an error span take this lexer's name for the same region", () => {
+    expect(
+      adoptErrorClasses(
+        [
+          { cls: "atom", start: 0, end: 3 },
+          { cls: "error", start: 3, end: 5 },
+        ],
+        [
+          { cls: "atom", start: 0, end: 3 },
+          { cls: "atom", start: 3, end: 5 },
+        ],
+      ),
+    ).toEqual([
+      { cls: "atom", start: 0, end: 3 },
+      { cls: "atom", start: 3, end: 5 },
+    ]);
+  });
+
+  it("leaves every other class alone", () => {
+    const spans = [
+      { cls: "open", start: 0, end: 1 },
+      { cls: "string", start: 1, end: 4 },
+    ] as const;
+    expect(adoptErrorClasses(spans, [{ cls: "atom", start: 0, end: 4 }])).toEqual(spans);
+  });
+
+  it("keeps the error name when this lexer has nothing there", () => {
+    expect(adoptErrorClasses([{ cls: "error", start: 0, end: 2 }], [])).toEqual([
+      { cls: "error", start: 0, end: 2 },
+    ]);
+  });
+});
+
 describe("differential test against syntax-color/racket-lexer", () => {
   it("has fixtures for every construct that breaks naive bracket matching", () => {
     expect(FIXTURES.length).toBeGreaterThanOrEqual(24);
@@ -70,10 +102,7 @@ describe("differential test against syntax-color/racket-lexer", () => {
   it.each(FIXTURES.map((fixture) => [fixture.name, fixture] as const))(
     "agrees with Racket on %s",
     (_name, fixture) => {
-      const mismatches = diffSpans(
-        oracleToSpans(fixture.tokens, fixture.source),
-        lexSourceToSpans(fixture.source),
-      );
+      const mismatches = compareLexers(fixture.source, fixture.tokens);
       const report = mismatches
         .map(
           (mismatch) =>
