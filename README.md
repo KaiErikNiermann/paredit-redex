@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/KaiErikNiermann/paredit-redex/main/icon.png"
+       width="104" height="104" alt="">
+</p>
+
 # Paredit for Racket
 
 Structural editing for Racket, Scheme and Lisp in VS Code — slurp, barf, splice, raise, wrap,

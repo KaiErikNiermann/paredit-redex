@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"
+     role="img" aria-label="Paredit for Racket">
+  <title>Paredit for Racket</title>
+  <!--
+    Square brackets around a caret.
+
+    Square brackets rather than round ones because that is the Racket tell —
+    cond clauses, let bindings and match patterns all live in [], which is also
+    why this extension binds wrap-square when upstream paredit leaves it
+    unbound. The caret is the point of the thing: structural editing is about
+    where the cursor sits relative to the brackets, not about the text between
+    them.
+
+    Three elements and no more, because the Marketplace shows this at 42px in a
+    list and VS Code at 16px in a tab. Earlier drafts nested a second bracket
+    pair inside; at 42px they merged into a blob.
+
+    icon.png is generated from this file — `pnpm icon`. Edit here, not there.
+  -->
+  <rect width="256" height="256" rx="56" fill="#232a3a"/>
+  <g fill="none" stroke="#e9ecf5" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M100 52 H70 V204 H100"/>
+    <path d="M156 52 H186 V204 H156"/>
+  </g>
+  <rect x="118" y="87" width="20" height="82" rx="10" fill="#f5a623"/>
+</svg>

@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "publisher": "KaiErikNiermann",
   "license": "MIT",
+  "icon": "icon.png",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KaiErikNiermann/paredit-redex.git"
@@ -37,6 +38,7 @@
   "main": "./dist/extension.js",
   "files": [
     "dist/**",
+    "icon.png",
     "README.md",
     "CHANGELOG.md",
     "LICENSE",
@@ -325,7 +327,8 @@
     "prepare": "husky",
     "package": "vsce package --no-dependencies --allow-unused-files-pattern --allow-missing-repository",
     "test:fixtures": "node test/oracle/generate.mjs",
-    "sync:contributions": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/sync-contributions.mjs"
+    "sync:contributions": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/sync-contributions.mjs",
+    "icon": "rsvg-convert -w 256 -h 256 icon.svg -o icon.png"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
