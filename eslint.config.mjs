@@ -67,11 +67,15 @@ export default tseslint.config(
     }
   },
   {
-    // The oracle harness exists to shell out to the local Racket install and
-    // read its source tree; resolving `racket` and `find` through PATH and
-    // reading paths built at runtime is the job, not an oversight. It never
+    // These harnesses shell out to the local Racket install and read fixtures
+    // and its source tree; resolving `racket` and `find` through PATH and
+    // reading paths built at runtime is the job, not an oversight. None of it
     // ships — nothing in dist/ imports it.
-    files: ["src/**/oracle-corpus.test.ts", "src/**/oracle-diff.test.ts"],
+    files: [
+      "src/**/oracle-corpus.test.ts",
+      "src/**/oracle-diff.test.ts",
+      "src/**/robustness.test.ts",
+    ],
     rules: {
       "sonarjs/no-os-command-from-path": "off",
       "security/detect-non-literal-fs-filename": "off"

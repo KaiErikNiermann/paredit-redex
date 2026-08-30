@@ -24,3 +24,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Eighteen structural editing commands: slurp and barf in both directions, splice, raise, wrap in
   round/square/curly brackets, kill and backward-kill, splice-killing in both directions, split,
   join, transpose, and drag a datum earlier or later. One undo step per command; multi-cursor aware.
+- Robustness test running every operation at every offset of every adversarial fixture, asserting
+  no throw, no overlapping or out-of-range edits, and an in-bounds caret.

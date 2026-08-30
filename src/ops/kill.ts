@@ -44,12 +44,15 @@ export function spliceKillingBackward(
   if (list === undefined) {
     return undefined;
   }
+  // The caret can sit inside the opening bracket itself -- `#hash(` is six
+  // characters -- and the two deletions would then overlap.
+  const from = Math.max(offset, list.openEnd);
   const text = document.getText();
   const edits = [
-    remove({ start: list.openStart, end: offset }),
+    remove({ start: list.openStart, end: from }),
     removeSeparating(
       text,
-      withLeadingSpace(text, { start: list.closeStart, end: list.closeEnd }, offset),
+      withLeadingSpace(text, { start: list.closeStart, end: list.closeEnd }, from),
     ),
   ];
   return { edits, caret: list.openStart };
@@ -68,10 +71,11 @@ export function spliceKillingForward(
   if (list === undefined) {
     return undefined;
   }
+  const from = Math.max(offset, list.openEnd);
   const text = document.getText();
   const edits = [
     removeSeparating(text, { start: list.openStart, end: list.openEnd }),
-    remove({ start: offset, end: list.closeEnd }),
+    remove({ start: from, end: list.closeEnd }),
   ];
-  return { edits, caret: mapOffset(offset, edits) };
+  return { edits, caret: mapOffset(from, edits) };
 }

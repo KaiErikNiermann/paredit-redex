@@ -101,11 +101,11 @@ export function dragForward(
     return undefined;
   }
   const text = document.getText();
-  // The caret rides along with the datum being dragged.
-  const shift = next.end - current.end;
+  // The dragged datum ends up flush against where its new neighbour ends.
+  const landing = next.end - (current.end - current.start);
   return {
     edits: swapEdits(text, current, next),
-    caret: offset + shift,
+    caret: landing + within(offset, current),
   };
 }
 
@@ -123,11 +123,20 @@ export function dragBackward(
     return undefined;
   }
   const text = document.getText();
-  const shift = current.start - previous.start;
   return {
     edits: swapEdits(text, previous, current),
-    caret: offset - shift,
+    caret: previous.start + within(offset, current),
   };
+}
+
+/**
+ * How far into `span` the caret sits, clamped to its extent.
+ *
+ * The caret need not be inside the datum being dragged — `datumSpanAt` also
+ * finds the next one ahead — so this cannot be a plain subtraction.
+ */
+function within(offset: number, span: Span): number {
+  return Math.max(0, Math.min(offset - span.start, span.end - span.start));
 }
 
 /** Two edits that exchange the text of two disjoint spans. */
