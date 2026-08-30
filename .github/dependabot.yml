@@ -21,6 +21,14 @@ updates:
           - minor
           - patch
     ignore:
+      # TypeScript stays on 6 for now, and needs no entry here: typescript-eslint
+      # declares `typescript: ">=4.8.4 <6.1.0"`, so Dependabot will not propose 7
+      # while that holds, and it refuses to load against it in any case
+      # ("typescript-eslint does not support TS 7.0"). TS 7 itself is fine —
+      # tsc --noEmit, the tests, the bundle and the VSIX all pass on it. Typed
+      # linting is what blocks, so raise both together once a stable
+      # typescript-eslint supports it.
+      #
       # Deliberately pinned to match `engines.vscode`. The `~` keeps @types/vscode
       # from ever describing an API newer than the oldest editor this extension
       # claims to support, and letting it drift would silently break that
