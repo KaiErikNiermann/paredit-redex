@@ -21,3 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in and out of lists, enclosing-list spans, and string/comment context predicates.
 - Six navigation commands on the canonical paredit keys: `ctrl+alt+f`/`b` over a datum,
   `ctrl+alt+u`/`n` out of a list, `ctrl+alt+d`/`p` into one. Multi-cursor aware.
+- Eighteen structural editing commands: slurp and barf in both directions, splice, raise, wrap in
+  round/square/curly brackets, kill and backward-kill, splice-killing in both directions, split,
+  join, transpose, and drag a datum earlier or later. One undo step per command; multi-cursor aware.

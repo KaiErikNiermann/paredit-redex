@@ -65,6 +65,96 @@
         "command": "paredit-redex.backwardDownSexp",
         "title": "Backward Down Sexp",
         "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.forwardSlurp",
+        "title": "Forward Slurp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.forwardBarf",
+        "title": "Forward Barf",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.backwardSlurp",
+        "title": "Backward Slurp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.backwardBarf",
+        "title": "Backward Barf",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.splice",
+        "title": "Splice Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.raise",
+        "title": "Raise Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.wrapRound",
+        "title": "Wrap Round",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.wrapSquare",
+        "title": "Wrap Square",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.wrapCurly",
+        "title": "Wrap Curly",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.killSexp",
+        "title": "Kill Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.backwardKillSexp",
+        "title": "Backward Kill Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.spliceKillingBackward",
+        "title": "Splice Killing Backward",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.spliceKillingForward",
+        "title": "Splice Killing Forward",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.splitSexp",
+        "title": "Split Sexp",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.joinSexps",
+        "title": "Join Sexps",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.transposeSexps",
+        "title": "Transpose Sexps",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.dragForward",
+        "title": "Drag Sexp Forward",
+        "category": "Paredit"
+      },
+      {
+        "command": "paredit-redex.dragBackward",
+        "title": "Drag Sexp Backward",
+        "category": "Paredit"
       }
     ],
     "keybindings": [
@@ -97,6 +187,116 @@
         "command": "paredit-redex.backwardDownSexp",
         "key": "ctrl+alt+p",
         "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/"
+      },
+      {
+        "command": "paredit-redex.forwardSlurp",
+        "key": "ctrl+right",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.forwardSlurp",
+        "key": "ctrl+shift+0",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.forwardBarf",
+        "key": "ctrl+left",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.forwardBarf",
+        "key": "ctrl+shift+]",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.backwardSlurp",
+        "key": "ctrl+alt+left",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.backwardSlurp",
+        "key": "ctrl+shift+9",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.backwardBarf",
+        "key": "ctrl+alt+right",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.backwardBarf",
+        "key": "ctrl+shift+[",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.splice",
+        "key": "alt+s",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.raise",
+        "key": "alt+r",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.wrapRound",
+        "key": "alt+shift+9",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.wrapSquare",
+        "key": "alt+[",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.wrapCurly",
+        "key": "alt+shift+[",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.killSexp",
+        "key": "ctrl+alt+k",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.backwardKillSexp",
+        "key": "ctrl+alt+backspace",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.spliceKillingBackward",
+        "key": "alt+up",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.spliceKillingForward",
+        "key": "alt+down",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.splitSexp",
+        "key": "alt+shift+s",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.joinSexps",
+        "key": "alt+shift+j",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.transposeSexps",
+        "key": "ctrl+alt+t",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.dragForward",
+        "key": "ctrl+alt+shift+down",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
+      },
+      {
+        "command": "paredit-redex.dragBackward",
+        "key": "ctrl+alt+shift+up",
+        "when": "editorTextFocus && editorLangId =~ /^(racket|scheme|lisp|commonlisp)$/ && !editorReadonly"
       }
     ]
   },

@@ -133,3 +133,22 @@ export function isDatumComment(token: Token): token is PrefixToken {
 export function isQuotingPrefix(token: Token): token is PrefixToken {
   return token.kind === "prefix" && token.prefix !== "datum-comment";
 }
+
+/**
+ * Characters that terminate a symbol, per `racket-lexer`'s `identifier-delims`.
+ *
+ * `#` is deliberately absent — `a#b` is one symbol. Whitespace terminates too
+ * but is tested separately.
+ */
+const DELIMITER_CHARS = new Set(['"', ",", "'", "`", "(", ")", "[", "]", "{", "}", ";"]);
+
+export function isDelimiterChar(char: string): boolean {
+  return DELIMITER_CHARS.has(char);
+}
+
+/** Whether two characters would read as one token if placed side by side. */
+export function wouldFuse(left: string, right: string): boolean {
+  return (
+    !/\s/.test(left) && !/\s/.test(right) && !isDelimiterChar(left) && !isDelimiterChar(right)
+  );
+}

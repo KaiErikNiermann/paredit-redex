@@ -23,27 +23,12 @@
 import type { LexState, StringFlavor } from "./lex-state";
 import { DEFAULT_STATE } from "./lex-state";
 import type { BracketShape, PrefixKind, Token } from "./tokens";
-import { shapeOf } from "./tokens";
+import { isDelimiterChar, shapeOf } from "./tokens";
 
 export interface LexedLine {
   readonly tokens: readonly Token[];
   readonly stateOut: LexState;
 }
-
-/** Characters that terminate a symbol. `#` is deliberately absent. */
-const DELIMITERS = new Set([
-  '"',
-  ",",
-  "'",
-  "`",
-  "(",
-  ")",
-  "[",
-  "]",
-  "{",
-  "}",
-  ";",
-]);
 
 const WHITESPACE = /\s+/y;
 const OPEN_BRACKET = /[([{]/y;
@@ -272,7 +257,7 @@ function scanAtom(line: string, start: number, tokens: Token[]): ScanResult {
       index = body.index;
       continue;
     }
-    if (char === undefined || DELIMITERS.has(char) || /\s/.test(char)) {
+    if (char === undefined || isDelimiterChar(char) || /\s/.test(char)) {
       break;
     }
     index += 1;

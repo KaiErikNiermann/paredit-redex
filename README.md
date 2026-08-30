@@ -7,6 +7,45 @@ VS Code has no working paredit for Racket. [Magic Racket][magic-racket] supplies
 grammar and language-server client but contributes no bracket manipulation, and every other
 candidate is either Clojure-only or unmaintained since 2020. This fills that gap.
 
+## Keymap
+
+The canonical `paredit.el` bindings, scoped to the `racket`, `scheme`, `lisp` and `commonlisp`
+language ids. Everything is also on the command palette under **Paredit**.
+
+| | Key | Command |
+|---|---|---|
+| **Navigate** | `ctrl+alt+f` / `ctrl+alt+b` | forward / backward over a datum |
+| | `ctrl+alt+u` / `ctrl+alt+n` | out of the list, backward / forward |
+| | `ctrl+alt+d` / `ctrl+alt+p` | into a list, forward / backward |
+| **Depth** | `ctrl+right` or `ctrl+shift+0` | forward slurp |
+| | `ctrl+left` or `ctrl+shift+]` | forward barf |
+| | `ctrl+alt+left` or `ctrl+shift+9` | backward slurp |
+| | `ctrl+alt+right` or `ctrl+shift+[` | backward barf |
+| | `alt+s` / `alt+r` | splice / raise |
+| | `alt+shift+9` / `alt+[` / `alt+shift+[` | wrap in `()` / `[]` / `{}` |
+| **Kill** | `ctrl+alt+k` / `ctrl+alt+backspace` | kill / backward-kill a datum |
+| | `alt+up` / `alt+down` | splice, killing backward / forward |
+| **Rearrange** | `alt+shift+s` / `alt+shift+j` | split / join |
+| | `ctrl+alt+t` | transpose |
+| | `ctrl+alt+shift+up` / `ctrl+alt+shift+down` | drag a datum earlier / later |
+
+Two things worth knowing before you turn this on.
+
+**It takes keys VS Code already uses**, inside Lisp files only: `ctrl+left`/`ctrl+right` normally
+move by word, and `alt+up`/`alt+down` normally move a line. `paredit.el` claims all four, so this
+does too. Rebind them in `keybindings.json` if you would rather keep the defaults.
+
+**The bracket chords assume a US layout.** `C-)` is written `ctrl+shift+0` because that is where `)`
+lives on a US keyboard; on a German layout `)` is `shift+9`, and the chord will not be what your
+fingers expect. The `ctrl+left`/`ctrl+right` alternates — which `paredit.el` also defines — are
+layout-independent, so slurp and barf work regardless; wrap (`alt+shift+9`) is the one that needs
+remapping.
+
+`wrap-square` and `wrap-curly` are bound here even though upstream paredit leaves them unbound:
+Racket code is full of `cond`, `let` and `match` clauses in `[]`, and racket-mode's own docs tell
+Emacs users to hand-bind them for exactly that reason. The drag commands have no paredit equivalent
+at all — they come from Calva, where they are the most-used part of the package.
+
 ## Status
 
 Early. See `CHANGELOG.md` for what actually works today.

@@ -212,6 +212,40 @@ function pastCommentedDatum(
   return past === undefined ? undefined : skipForward(document, tokenAtOrAfter(document, past));
 }
 
+/** A half-open range of absolute offsets. */
+export interface Span {
+  readonly start: number;
+  readonly end: number;
+}
+
+/**
+ * The datum the caret is in, or failing that the next one ahead.
+ *
+ * This is what "the sexp at point" means for the editing operations: with the
+ * caret inside `fo‸o` the datum is `foo`, and with it in whitespace the datum is
+ * whatever comes next. At a closing bracket there is nothing ahead, and the
+ * result is undefined rather than the enclosing list.
+ */
+export function datumSpanAt(document: TokenizedDocument, offset: number): Span | undefined {
+  const located = tokenAtOrAfter(document, offset);
+  if (located === undefined) {
+    return undefined;
+  }
+
+  const containing =
+    located.start < offset && !isSkippable(located.token) && located.token.kind !== "close"
+      ? located
+      : undefined;
+  const target = containing ?? skipForward(document, located);
+  if (target === undefined || target.token.kind === "close") {
+    return undefined;
+  }
+
+  const end = forwardDatum(document, target.start);
+  const start = end === undefined ? undefined : backwardDatum(document, end);
+  return start === undefined || end === undefined ? undefined : { start, end };
+}
+
 /** Move backward over one datum, including any reader prefixes bound to it. */
 export function backwardDatum(document: TokenizedDocument, offset: number): number | undefined {
   const current = skipBackward(document, tokenAtOrBefore(document, offset));

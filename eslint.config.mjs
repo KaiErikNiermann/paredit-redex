@@ -53,10 +53,10 @@ export default tseslint.config(
     }
   },
   {
-    // The lexer is a character-level state machine: index arithmetic over the
-    // source string is the point, and the character classes it tests are the
-    // Racket reader's, not user input. These rules fire on every line of it.
-    files: ["src/reader/**/*.ts"],
+    // The reader and the operations are character-level code: index arithmetic
+    // over the source string is the point, and the character classes they test
+    // are the Racket reader's, not user input. These rules fire on every line.
+    files: ["src/reader/**/*.ts", "src/ops/**/*.ts"],
     rules: {
       "security/detect-object-injection": "off",
       // Every other identifier here is a lexer `token`; the rule keys off the
