@@ -5,6 +5,14 @@
   "version": "0.0.1",
   "publisher": "KaiErikNiermann",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaiErikNiermann/paredit-redex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KaiErikNiermann/paredit-redex/issues"
+  },
+  "homepage": "https://github.com/KaiErikNiermann/paredit-redex#readme",
   "packageManager": "pnpm@10.14.0",
   "engines": {
     "vscode": "^1.85.0"
