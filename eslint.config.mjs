@@ -59,6 +59,9 @@ export default tseslint.config(
     files: ["src/reader/**/*.ts"],
     rules: {
       "security/detect-object-injection": "off",
+      // Every other identifier here is a lexer `token`; the rule keys off the
+      // name and has nothing to say about them.
+      "security/detect-possible-timing-attacks": "off",
       "security/detect-unsafe-regex": "off",
       "security/detect-non-literal-regexp": "off"
     }

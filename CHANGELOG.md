@@ -17,3 +17,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   by `pnpm test` and over the whole local Racket installation by `pnpm test:oracle`.
 - Incrementally maintained tokenisation (`src/reader/document.ts`), relexing only from the edited
   line up to the first line whose lexer state is unchanged.
+- Structural motion over the token stream (`src/reader/cursor.ts`): forward/backward over a datum,
+  in and out of lists, enclosing-list spans, and string/comment context predicates.

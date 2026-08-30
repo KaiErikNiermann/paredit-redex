@@ -35,6 +35,8 @@ export class TokenizedDocument {
   #tokens: (readonly Token[])[];
   /** State at the start of each line; `#states[0]` is always the default. */
   #states: LexState[];
+  /** Absolute offset of each line start; rebuilt lazily after an edit. */
+  #lineStarts: number[] | undefined;
 
   constructor(text: string) {
     this.#lines = text.split("\n");
@@ -64,6 +66,53 @@ export class TokenizedDocument {
     return this.#lines.join("\n");
   }
 
+  /** Absolute offset of the first character of `line`. */
+  lineStart(line: number): number {
+    const starts = (this.#lineStarts ??= this.#computeLineStarts());
+    if (line <= 0) {
+      return 0;
+    }
+    return starts[Math.min(line, starts.length - 1)] ?? this.#totalLength();
+  }
+
+  offsetAt(position: Position): number {
+    const line = Math.max(0, Math.min(position.line, this.#lines.length - 1));
+    const character = Math.max(0, Math.min(position.character, this.lineText(line).length));
+    return this.lineStart(line) + character;
+  }
+
+  positionAt(offset: number): Position {
+    const starts = (this.#lineStarts ??= this.#computeLineStarts());
+    const clamped = Math.max(0, Math.min(offset, this.#totalLength()));
+
+    // Binary search for the last line starting at or before `clamped`.
+    let low = 0;
+    let high = starts.length - 1;
+    while (low < high) {
+      const middle = Math.ceil((low + high) / 2);
+      if ((starts[middle] ?? 0) <= clamped) {
+        low = middle;
+      } else {
+        high = middle - 1;
+      }
+    }
+    return { line: low, character: clamped - (starts[low] ?? 0) };
+  }
+
+  #computeLineStarts(): number[] {
+    const starts: number[] = [];
+    let offset = 0;
+    for (const line of this.#lines) {
+      starts.push(offset);
+      offset += line.length + 1;
+    }
+    return starts;
+  }
+
+  #totalLength(): number {
+    return this.#lines.reduce((total, line) => total + line.length + 1, -1);
+  }
+
   /**
    * Apply one change, relexing only what it can affect.
    *
@@ -79,6 +128,7 @@ export class TokenizedDocument {
     const replacement = (prefix + change.text + suffix).split("\n");
 
     const removed = lastLine - firstLine + 1;
+    this.#lineStarts = undefined;
     this.#lines.splice(firstLine, removed, ...replacement);
     // The per-line arrays are indexed by line number, so they have to be
     // resized in step; placeholders are overwritten by the relex below.
