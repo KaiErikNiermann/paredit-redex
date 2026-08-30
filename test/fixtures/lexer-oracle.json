@@ -2434,5 +2434,557 @@
         "type": "white-space"
       }
     ]
+  },
+  {
+    "name": "fuzz-char-hash-then-bar",
+    "source": "#\\#|(\n",
+    "tokens": [
+      {
+        "end": 3,
+        "paren": null,
+        "start": 0,
+        "type": "constant"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 3,
+        "type": "error"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-block-comment-then-char",
+    "source": "#|#\\\"|#\n",
+    "tokens": [
+      {
+        "end": 7,
+        "paren": null,
+        "start": 0,
+        "type": "comment"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 7,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-here-string-bracket-tag",
+    "source": "#<<(\ntext\n(\n",
+    "tokens": [
+      {
+        "end": 11,
+        "paren": null,
+        "start": 0,
+        "type": "string"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 11,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-bar-closing-before-hash-open",
+    "source": "|#\n#|#(\n",
+    "tokens": [
+      {
+        "end": 6,
+        "paren": null,
+        "start": 0,
+        "type": "symbol"
+      },
+      {
+        "end": 7,
+        "paren": "(",
+        "start": 6,
+        "type": "parenthesis"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 7,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-bar-then-symbol-tail",
+    "source": "(|a\nb|c d)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 7,
+        "type": "white-space"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 8,
+        "type": "symbol"
+      },
+      {
+        "end": 10,
+        "paren": ")",
+        "start": 9,
+        "type": "parenthesis"
+      },
+      {
+        "end": 11,
+        "paren": null,
+        "start": 10,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-astral-char-then-regexp",
+    "source": "#\\𝔸#px#\"\n",
+    "tokens": [
+      {
+        "end": 3,
+        "paren": null,
+        "start": 0,
+        "type": "constant"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 3,
+        "type": "error"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-lang-line-touching-bracket",
+    "source": "#lang racket(\n",
+    "tokens": [
+      {
+        "end": 13,
+        "paren": null,
+        "start": 0,
+        "type": "error"
+      },
+      {
+        "end": 14,
+        "paren": null,
+        "start": 13,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "lang-word-without-space",
+    "source": "(a #lang} b)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 3,
+        "type": "error"
+      },
+      {
+        "end": 9,
+        "paren": "}",
+        "start": 8,
+        "type": "parenthesis"
+      },
+      {
+        "end": 10,
+        "paren": null,
+        "start": 9,
+        "type": "white-space"
+      },
+      {
+        "end": 11,
+        "paren": null,
+        "start": 10,
+        "type": "symbol"
+      },
+      {
+        "end": 12,
+        "paren": ")",
+        "start": 11,
+        "type": "parenthesis"
+      },
+      {
+        "end": 13,
+        "paren": null,
+        "start": 12,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-char-literal-escaping-newline",
+    "source": "#\\\n(a)\n",
+    "tokens": [
+      {
+        "end": 3,
+        "paren": null,
+        "start": 0,
+        "type": "constant"
+      },
+      {
+        "end": 4,
+        "paren": "(",
+        "start": 3,
+        "type": "parenthesis"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 4,
+        "type": "symbol"
+      },
+      {
+        "end": 6,
+        "paren": ")",
+        "start": 5,
+        "type": "parenthesis"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 6,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-backslash-escaping-newline",
+    "source": "a\\\n(b)\n",
+    "tokens": [
+      {
+        "end": 3,
+        "paren": null,
+        "start": 0,
+        "type": "symbol"
+      },
+      {
+        "end": 4,
+        "paren": "(",
+        "start": 3,
+        "type": "parenthesis"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 4,
+        "type": "symbol"
+      },
+      {
+        "end": 6,
+        "paren": ")",
+        "start": 5,
+        "type": "parenthesis"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 6,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-script-line-continued",
+    "source": "#! /bin/sh \\\nstill comment\n(a)\n",
+    "tokens": [
+      {
+        "end": 26,
+        "paren": null,
+        "start": 0,
+        "type": "comment"
+      },
+      {
+        "end": 27,
+        "paren": null,
+        "start": 26,
+        "type": "white-space"
+      },
+      {
+        "end": 28,
+        "paren": "(",
+        "start": 27,
+        "type": "parenthesis"
+      },
+      {
+        "end": 29,
+        "paren": null,
+        "start": 28,
+        "type": "symbol"
+      },
+      {
+        "end": 30,
+        "paren": ")",
+        "start": 29,
+        "type": "parenthesis"
+      },
+      {
+        "end": 31,
+        "paren": null,
+        "start": 30,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-astral-alphabetic-char",
+    "source": "(#\\𝔸a #;(b) c)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 5,
+        "paren": null,
+        "start": 1,
+        "type": "error"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 5,
+        "type": "white-space"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 6,
+        "type": "sexp-comment"
+      },
+      {
+        "end": 9,
+        "paren": "(",
+        "start": 8,
+        "type": "parenthesis"
+      },
+      {
+        "end": 10,
+        "paren": null,
+        "start": 9,
+        "type": "symbol"
+      },
+      {
+        "end": 11,
+        "paren": ")",
+        "start": 10,
+        "type": "parenthesis"
+      },
+      {
+        "end": 12,
+        "paren": null,
+        "start": 11,
+        "type": "white-space"
+      },
+      {
+        "end": 13,
+        "paren": null,
+        "start": 12,
+        "type": "symbol"
+      },
+      {
+        "end": 14,
+        "paren": ")",
+        "start": 13,
+        "type": "parenthesis"
+      },
+      {
+        "end": 15,
+        "paren": null,
+        "start": 14,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "blank-line-inside-string",
+    "source": "(define s \"line one\n\nline three\")\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 7,
+        "type": "white-space"
+      },
+      {
+        "end": 9,
+        "paren": null,
+        "start": 8,
+        "type": "symbol"
+      },
+      {
+        "end": 10,
+        "paren": null,
+        "start": 9,
+        "type": "white-space"
+      },
+      {
+        "end": 32,
+        "paren": null,
+        "start": 10,
+        "type": "string"
+      },
+      {
+        "end": 33,
+        "paren": ")",
+        "start": 32,
+        "type": "parenthesis"
+      },
+      {
+        "end": 34,
+        "paren": null,
+        "start": 33,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "blank-line-inside-block-comment",
+    "source": "#| one\n\nthree |# (a)\n",
+    "tokens": [
+      {
+        "end": 16,
+        "paren": null,
+        "start": 0,
+        "type": "comment"
+      },
+      {
+        "end": 17,
+        "paren": null,
+        "start": 16,
+        "type": "white-space"
+      },
+      {
+        "end": 18,
+        "paren": "(",
+        "start": 17,
+        "type": "parenthesis"
+      },
+      {
+        "end": 19,
+        "paren": null,
+        "start": 18,
+        "type": "symbol"
+      },
+      {
+        "end": 20,
+        "paren": ")",
+        "start": 19,
+        "type": "parenthesis"
+      },
+      {
+        "end": 21,
+        "paren": null,
+        "start": 20,
+        "type": "white-space"
+      }
+    ]
+  },
+  {
+    "name": "fuzz-hash-bang-not-a-shebang",
+    "source": "(a #!x b)\n",
+    "tokens": [
+      {
+        "end": 1,
+        "paren": "(",
+        "start": 0,
+        "type": "parenthesis"
+      },
+      {
+        "end": 2,
+        "paren": null,
+        "start": 1,
+        "type": "symbol"
+      },
+      {
+        "end": 3,
+        "paren": null,
+        "start": 2,
+        "type": "white-space"
+      },
+      {
+        "end": 6,
+        "paren": null,
+        "start": 3,
+        "type": "other"
+      },
+      {
+        "end": 7,
+        "paren": null,
+        "start": 6,
+        "type": "white-space"
+      },
+      {
+        "end": 8,
+        "paren": null,
+        "start": 7,
+        "type": "symbol"
+      },
+      {
+        "end": 9,
+        "paren": ")",
+        "start": 8,
+        "type": "parenthesis"
+      },
+      {
+        "end": 10,
+        "paren": null,
+        "start": 9,
+        "type": "white-space"
+      }
+    ]
   }
 ]

@@ -84,6 +84,7 @@ export default tseslint.config(
       "src/**/oracle-diff.test.ts",
       "src/**/robustness.test.ts",
       "src/**/catalog.test.ts",
+      "src/reader/testing/**/*.ts",
     ],
     rules: {
       "sonarjs/no-os-command-from-path": "off",

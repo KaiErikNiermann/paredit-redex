@@ -1,7 +1,7 @@
 {
   "name": "paredit-redex",
   "displayName": "Paredit for Racket",
-  "description": "Structural editing (paredit) for Racket, Scheme and Lisp \u2014 slurp, barf, splice, raise, wrap, with the canonical Emacs keymap.",
+  "description": "Structural editing (paredit) for Racket, Scheme and Lisp — slurp, barf, splice, raise, wrap, with the canonical Emacs keymap.",
   "version": "0.0.1",
   "publisher": "KaiErikNiermann",
   "license": "MIT",
@@ -331,6 +331,7 @@
     "eslint-plugin-security": "^4.0.1",
     "eslint-plugin-sonarjs": "^4.2.0",
     "eslint-plugin-unicorn": "^73.0.0",
+    "fast-check": "^4.9.0",
     "husky": "^9.1.7",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.67.0",

@@ -94,5 +94,65 @@
   {
     "name": "redex-shaped-form",
     "source": "#lang racket\n(define-language L\n  [e ::= (e e) x (lambda (x) e)]\n  [x ::= variable-not-otherwise-mentioned])\n(reduction-relation\n L\n (--> (in-hole E ((lambda (x) e) v)) (in-hole E (subst x v e)) \"beta\"))\n"
+  },
+  {
+    "name": "fuzz-char-hash-then-bar",
+    "source": "#\\#|(\n"
+  },
+  {
+    "name": "fuzz-block-comment-then-char",
+    "source": "#|#\\\"|#\n"
+  },
+  {
+    "name": "fuzz-here-string-bracket-tag",
+    "source": "#<<(\ntext\n(\n"
+  },
+  {
+    "name": "fuzz-bar-closing-before-hash-open",
+    "source": "|#\n#|#(\n"
+  },
+  {
+    "name": "fuzz-bar-then-symbol-tail",
+    "source": "(|a\nb|c d)\n"
+  },
+  {
+    "name": "fuzz-astral-char-then-regexp",
+    "source": "#\\𝔸#px#\"\n"
+  },
+  {
+    "name": "fuzz-lang-line-touching-bracket",
+    "source": "#lang racket(\n"
+  },
+  {
+    "name": "lang-word-without-space",
+    "source": "(a #lang} b)\n"
+  },
+  {
+    "name": "fuzz-char-literal-escaping-newline",
+    "source": "#\\\n(a)\n"
+  },
+  {
+    "name": "fuzz-backslash-escaping-newline",
+    "source": "a\\\n(b)\n"
+  },
+  {
+    "name": "fuzz-script-line-continued",
+    "source": "#! /bin/sh \\\nstill comment\n(a)\n"
+  },
+  {
+    "name": "fuzz-astral-alphabetic-char",
+    "source": "(#\\𝔸a #;(b) c)\n"
+  },
+  {
+    "name": "blank-line-inside-string",
+    "source": "(define s \"line one\n\nline three\")\n"
+  },
+  {
+    "name": "blank-line-inside-block-comment",
+    "source": "#| one\n\nthree |# (a)\n"
+  },
+  {
+    "name": "fuzz-hash-bang-not-a-shebang",
+    "source": "(a #!x b)\n"
   }
 ]

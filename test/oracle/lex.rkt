@@ -42,12 +42,27 @@
 ;; the editor anyway: VS Code hands the lexer line text with the terminator
 ;; already stripped.
 (define (lex-file path)
-  (define source
-    (string-replace (call-with-input-file path port->string) "\r\n" "\n"))
-  (lex-port (open-input-string source)))
+  (lex-port (open-input-string (normalize (call-with-input-file path port->string)))))
+
+(define (normalize source)
+  (string-replace source "\r\n" "\n"))
+
+(define (run-server)
+  (let loop ()
+    (define line (read-line))
+    (unless (eof-object? line)
+      (define source (normalize (string->jsexpr line)))
+      (write-json (lex-port (open-input-string source)))
+      (newline)
+      (flush-output)
+      (loop))))
 
 (module+ main
-  (for ([path (in-vector (current-command-line-arguments))])
+  (define args (current-command-line-arguments))
+  (when (and (= 1 (vector-length args)) (equal? (vector-ref args 0) "--server"))
+    (run-server)
+    (exit 0))
+  (for ([path (in-vector args)])
     (define tokens
       (with-handlers ([exn:fail? (lambda (_) #f)])
         (lex-file path)))
