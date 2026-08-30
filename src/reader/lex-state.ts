@@ -19,7 +19,30 @@ export type LexState =
   | { readonly kind: "block-comment"; readonly depth: number }
   | { readonly kind: "string"; readonly flavor: StringFlavor }
   | { readonly kind: "here-string"; readonly tag: string }
-  | { readonly kind: "bar" };
+  | { readonly kind: "bar" }
+  /**
+   * A `#\\` left at the end of a line, whose character is the newline itself.
+   *
+   * The lexer works on line text with the terminator already stripped, so the
+   * character literal's own character is not on the line that opens it.
+   */
+  | { readonly kind: "pending-char" }
+  /**
+   * A `#!` script line continued by a trailing backslash.
+   *
+   * `racket-lexer`'s script rule pairs a backslash with the newline after it,
+   * so a shebang line that wraps stays a comment on the next line too.
+   */
+  | { readonly kind: "script-line" }
+  /**
+   * A symbol whose last character was a backslash, escaping the newline.
+   *
+   * Distinct from `pending-char`: there the newline *is* the datum's character
+   * and the datum is finished, whereas here the newline is part of a symbol
+   * that carries on. `a\\<newline>#lang` is one symbol, not a symbol followed by
+   * a language directive.
+   */
+  | { readonly kind: "atom-continuation" };
 
 /**
  * The state at the start of a line of ordinary code.
@@ -38,7 +61,10 @@ export function statesEqual(a: LexState, b: LexState): boolean {
   }
   switch (a.kind) {
     case "default":
-    case "bar": {
+    case "bar":
+    case "pending-char":
+    case "script-line":
+    case "atom-continuation": {
       return true;
     }
     case "block-comment": {

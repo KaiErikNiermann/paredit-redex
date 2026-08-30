@@ -95,6 +95,18 @@ describe("character literals", () => {
     ]);
   });
 
+  // Found by the fuzzer: matching one UTF-16 code unit split the surrogate
+  // pair, giving a three-unit literal and a stray half.
+  it("takes an astral character whole", () => {
+    expect(lex("(#\\\u{1D538} a)")).toEqual([
+      "open:(",
+      "atom:#\\\u{1D538}",
+      "whitespace: ",
+      "atom:a",
+      "close:)",
+    ]);
+  });
+
   it("takes the longest match, matching racket-lexer's rule order", () => {
     expect(lex("#\\space")).toEqual(["atom:#\\space"]);
     expect(lex("#\\nul")).toEqual(["atom:#\\nul"]);
@@ -214,6 +226,14 @@ describe("symbols", () => {
 
   it("lets a backslash quote one delimiter", () => {
     expect(lex("(a\\(b)")).toEqual(["open:(", "atom:a\\(b", "close:)"]);
+  });
+
+  // Found by the fuzzer: resuming at the top-level dispatch after the bar
+  // closed read `#(` as a vector opening, inventing a bracket inside a symbol.
+  it("keeps scanning the symbol after a bar closes on a later line", () => {
+    const { rendered, final } = lexAll("|#\n#|#(");
+    expect(final).toEqual(DEFAULT_STATE);
+    expect(rendered[1]).toEqual(["atom:#|#", "open:("]);
   });
 
   it("carries an unterminated bar across lines", () => {

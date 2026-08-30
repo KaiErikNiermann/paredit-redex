@@ -34,9 +34,25 @@ const WHITESPACE = /\s+/y;
 const OPEN_BRACKET = /[([{]/y;
 const PREFIXED_OPEN = /#(?:hash(?:eqv|eq|alw)?|s|\d+)?[([{]/y;
 const CLOSE = /[)\]}]/y;
-const CHARACTER = /#\\(?:[0-3][0-7][0-7]|[uU][\da-fA-F]{1,8}|[a-zA-Z]{2,}|[^])/y;
+// The `u` flag is load-bearing: without it the final alternative matches a
+// single UTF-16 code unit, which splits `#\\𝔸` across its surrogate pair and
+// reports a three-unit character literal followed by a stray half.
+const CHARACTER =
+  /#\\(?:[0-3][0-7][0-7]|u[\da-fA-F]{1,4}|U[\da-fA-F]{1,8}|\p{Alphabetic}{2,}|[^])/uy;
 const STRING_OPEN = /(?:#(?:rx|px)#?|#)?"/y;
-const LANG_DIRECTIVE = /#lang[ \t]+[\w+\-/]*/y;
+/**
+ * `#lang` plus a space, then the language name up to the next whitespace.
+ *
+ * The name is not restricted to identifier characters: Racket lexes
+ * `#lang racket(` as one token to the end of the line rather than as `#lang
+ * racket` followed by an opening bracket. Nor is it quoted -- in `#lang x|y z`
+ * the bar is an ordinary character and the token still ends at the space.
+ *
+ * The space is required. Without one there is no directive and the text is an
+ * ordinary symbol that stops at delimiters -- `#lang}` really is `#lang`
+ * followed by a closing brace, and appears as such in Racket's own source.
+ */
+const LANG_DIRECTIVE = /#lang \S*/y;
 const SCRIPT_LINE = /#![ /]/y;
 /** `#<<` opens a here string whose terminator is the rest of the line. */
 const HERE_STRING_OPEN = "#<<";
@@ -105,10 +121,37 @@ export function lexLine(line: string, stateIn: LexState): LexedLine {
       break;
     }
     case "bar": {
-      const end = scanBarBody(line, 0);
-      push(tokens, "atom", 0, end.index);
-      state = end.closed ? DEFAULT_STATE : state;
-      index = end.index;
+      const body = scanBarBody(line, 0);
+      if (body.closed) {
+        // The bar closed, but the symbol it belongs to need not have ended:
+        // `|a|b` is one symbol, and so is `|a|#(`, where the `#(` is symbol
+        // text rather than a vector opening. Resuming at the top-level dispatch
+        // instead would read a bracket that is not there.
+        const resumed = scanAtom(line, 0, tokens, body.index);
+        state = resumed.state ?? DEFAULT_STATE;
+        index = resumed.index;
+      } else {
+        push(tokens, "atom", 0, body.index);
+        index = body.index;
+      }
+      break;
+    }
+    case "atom-continuation": {
+      const result = continueAtom(line, tokens);
+      state = result.state ?? DEFAULT_STATE;
+      index = result.index;
+      break;
+    }
+    case "script-line": {
+      const result = scriptLine(line, 0, tokens);
+      state = result.state ?? DEFAULT_STATE;
+      index = result.index;
+      break;
+    }
+    case "pending-char": {
+      // The newline this line follows was the character literal's character;
+      // this line itself starts clean.
+      state = DEFAULT_STATE;
       break;
     }
     case "default": {
@@ -159,9 +202,10 @@ function scanToken(line: string, start: number, tokens: Token[]): ScanResult {
   // Before the generic `#` cases: `#lang` swallows the language name, and a
   // character literal may itself be a bracket or a quote.
   if (matchAt(SCRIPT_LINE, line, start) !== undefined) {
-    push(tokens, "comment", start, line.length);
-    return { index: line.length };
+    return scriptLine(line, start, tokens);
   }
+
+
 
   if (line.startsWith(HERE_STRING_OPEN, start)) {
     // Everything after `#<<` on this line is the terminator tag; the body runs
@@ -191,9 +235,11 @@ function scanToken(line: string, start: number, tokens: Token[]): ScanResult {
     return { index: start + character.length };
   }
   if (line.startsWith("#\\", start)) {
-    // `#\` with nothing after it: not a character, but the stream stays total.
-    push(tokens, "error", start, line.length);
-    return { index: line.length };
+    // Nothing follows on this line, so the character is the newline itself.
+    // At end of input there is no newline and Racket calls this an error,
+    // but the extent is the same either way.
+    push(tokens, "atom", start, line.length);
+    return { index: line.length, state: { kind: "pending-char" } };
   }
 
   const stringOpen = matchAt(STRING_OPEN, line, start);
@@ -231,6 +277,16 @@ function scanToken(line: string, start: number, tokens: Token[]): ScanResult {
 }
 
 /**
+ * Consume a `#!` script line, which a trailing backslash continues.
+ */
+function scriptLine(line: string, start: number, tokens: Token[]): ScanResult {
+  push(tokens, "comment", start, line.length);
+  return line.endsWith("\\")
+    ? { index: line.length, state: { kind: "script-line" } }
+    : { index: line.length, state: DEFAULT_STATE };
+}
+
+/**
  * Consume a symbol, number, boolean or keyword.
  *
  * Two escape mechanisms interrupt the plain run to a delimiter: a backslash
@@ -238,36 +294,96 @@ function scanToken(line: string, start: number, tokens: Token[]): ScanResult {
  * next pipe — including brackets, and including newlines, which is why an
  * unterminated pipe hands back the `bar` state.
  */
-function scanAtom(line: string, start: number, tokens: Token[]): ScanResult {
-  let index = start;
+function scanAtom(
+  line: string,
+  start: number,
+  tokens: Token[],
+  from: number = start,
+): ScanResult {
+  const scan = scanAtomBody(line, from);
+
+  if (scan.stop === "unterminated-bar") {
+    push(tokens, "atom", start, scan.index);
+    return { index: scan.index, state: { kind: "bar" } };
+  }
+
+  // A delimiter in the very first position would otherwise loop forever; the
+  // dispatch above has already handled every delimiter that can start a token,
+  // so anything reaching here is unreadable input.
+  const end = scan.index === start ? start + 1 : scan.index;
+  push(tokens, scan.index === start ? "error" : "atom", start, end);
+
+  return scan.stop === "escaped-newline"
+    ? { index: end, state: { kind: "atom-continuation" } }
+    : { index: end };
+}
+
+/**
+ * Continue a symbol that the previous line's trailing backslash carried over.
+ *
+ * The dispatch is deliberately not re-entered: mid-symbol, `#lang` and `#<<` are
+ * symbol text rather than a directive or a here string, and re-dispatching would
+ * read them as the latter.
+ */
+function continueAtom(line: string, tokens: Token[]): ScanResult {
+  const scan = scanAtomBody(line, 0);
+  if (scan.index === 0) {
+    // The symbol ended at the newline; whatever is here starts a fresh token.
+    return { index: 0, state: DEFAULT_STATE };
+  }
+
+  push(tokens, "atom", 0, scan.index);
+  switch (scan.stop) {
+    case "unterminated-bar": {
+      return { index: scan.index, state: { kind: "bar" } };
+    }
+    case "escaped-newline": {
+      return { index: scan.index, state: { kind: "atom-continuation" } };
+    }
+    case "delimiter": {
+      return { index: scan.index, state: DEFAULT_STATE };
+    }
+  }
+}
+
+interface AtomScan {
+  readonly index: number;
+  readonly stop: "delimiter" | "unterminated-bar" | "escaped-newline";
+}
+
+/** Advance over symbol characters, honouring both escape mechanisms. */
+function scanAtomBody(line: string, from: number): AtomScan {
+  let index = from;
+
   while (index < line.length) {
     const char = line[index];
+
     if (char === "\\") {
-      // A backslash at end of line quotes the newline; either way the token
-      // cannot extend past the characters this line actually has.
-      index = Math.min(index + 2, line.length);
+      if (index + 1 >= line.length) {
+        // The escaped character is the newline itself, so the symbol runs on
+        // past the end of this line.
+        return { index: line.length, stop: "escaped-newline" };
+      }
+      index += 2;
       continue;
     }
+
     if (char === "|") {
       const body = scanBarBody(line, index + 1);
       if (!body.closed) {
-        push(tokens, "atom", start, body.index);
-        return { index: body.index, state: { kind: "bar" } };
+        return { index: body.index, stop: "unterminated-bar" };
       }
       index = body.index;
       continue;
     }
+
     if (char === undefined || isDelimiterChar(char) || /\s/.test(char)) {
       break;
     }
     index += 1;
   }
-  // A delimiter in the very first position would otherwise loop forever; the
-  // dispatch above has already handled every delimiter that can start a token,
-  // so anything reaching here is unreadable input.
-  const end = index === start ? start + 1 : index;
-  push(tokens, index === start ? "error" : "atom", start, end);
-  return { index: end };
+
+  return { index, stop: "delimiter" };
 }
 
 interface BodyScan {
@@ -333,8 +449,24 @@ function scanBlockCommentBody(line: string, start: number, depth: number): Comme
   return { index: line.length, depth: level };
 }
 
-function push(tokens: Token[], kind: "atom" | "string" | "comment" | "whitespace" | "error", start: number, end: number): void {
-  tokens.push({ kind, start, end });
+/**
+ * Append a token, unless it would be empty.
+ *
+ * A blank line inside a multi-line string or block comment has nothing to
+ * report, and the resume branches would otherwise emit a zero-length token for
+ * it. Everything downstream — the cursor's stepping, the differential test's
+ * coalescing — assumes tokens are non-empty, and an empty one would not fail
+ * loudly, it would just quietly sit there.
+ */
+function push(
+  tokens: Token[],
+  kind: "atom" | "string" | "comment" | "whitespace" | "error",
+  start: number,
+  end: number,
+): void {
+  if (end > start) {
+    tokens.push({ kind, start, end });
+  }
 }
 
 function pushBracket(tokens: Token[], kind: "open" | "close", start: number, end: number, lexeme: string): void {
