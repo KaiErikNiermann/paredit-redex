@@ -8,10 +8,6 @@
 Structural editing for Racket, Scheme and Lisp in VS Code — slurp, barf, splice, raise, wrap,
 split, join — with the canonical `paredit.el` keymap.
 
-VS Code has no working paredit for Racket. [Magic Racket][magic-racket] supplies the language id,
-grammar and language-server client but contributes no bracket manipulation, and every other
-candidate is either Clojure-only or unmaintained since 2020. This fills that gap.
-
 ## Keymap
 
 The canonical `paredit.el` bindings, scoped to the `racket`, `scheme`, `lisp` and `commonlisp`
