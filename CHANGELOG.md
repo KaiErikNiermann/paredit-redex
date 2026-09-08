@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-08
+
 ### Added
 
 - Project scaffold: TypeScript (strict), esbuild bundling, ESLint flat config, vitest, husky pre-push.
@@ -54,3 +56,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Kill and backward-kill now absorb the whitespace they would otherwise strand: deleting `b` from
   `(a b c)` gives `(a c)` rather than `(a  c)`, and from `(a b)` gives `(a)` rather than `(a )`.
+
+[Unreleased]: https://github.com/KaiErikNiermann/paredit-redex/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/KaiErikNiermann/paredit-redex/releases/tag/v0.1.0

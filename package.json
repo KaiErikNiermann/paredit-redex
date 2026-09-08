@@ -2,7 +2,7 @@
   "name": "paredit-redex",
   "displayName": "Paredit for Racket",
   "description": "Structural editing (paredit) for Racket, Scheme and Lisp — slurp, barf, splice, raise, wrap, with the canonical Emacs keymap.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publisher": "KaiErikNiermann",
   "license": "MIT",
   "icon": "icon.png",
