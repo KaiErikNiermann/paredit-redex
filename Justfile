@@ -52,7 +52,7 @@ install-local: build
 version:
     @node -p "require('./package.json').version"
 
-# Bump version, commit, tag, push, create GitHub release
+# Bump version, commit, tag and push; the Release workflow does the rest
 release bump="patch":
     #!/usr/bin/env bash
     set -euo pipefail
@@ -83,16 +83,15 @@ rerun version:
     git push origin "v$version"
     echo "Re-triggered release workflow for v$version"
 
-# Delete and recreate the GitHub release + retag HEAD
+# Delete the GitHub release and retag HEAD so the workflow recreates it
 rerelease version:
     #!/usr/bin/env bash
     set -euo pipefail
     version="{{version}}"
     gh release delete "v$version" -y 2>/dev/null || true
     just rerun "$version"
-    gh release create "v$version" --title "v$version" --generate-notes
 
-# Internal: bump package.json, commit, tag, push, create release
+# Internal: bump package.json, commit, tag, push (the workflow does the rest)
 _release version:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -103,8 +102,14 @@ _release version:
     git push
     git tag "v$version"
     git push origin "v$version"
-    gh release create "v$version" --title "v$version" --generate-notes
-    echo "Release v$version created — GitHub Actions will build and publish"
+    echo "Tagged v$version — the Release workflow verifies, packages, publishes to both"
+    echo "registries and creates the GitHub release. Watch it with: just release-watch"
+
+# Follow the Release workflow run for the current tag
+release-watch:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    gh run watch "$(gh run list --workflow Release --limit 1 --json databaseId --jq '.[0].databaseId')" --exit-status
 
 # --- Publishing (dry-run) ---
 

@@ -6,13 +6,27 @@ on:
       - "v*"
   workflow_dispatch:
 
+# A tag is published exactly once; never cancel a release mid-flight.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
-  contents: write
+  contents: read
+
+env:
+  PNPM_VERSION: "10.14.0"
+  NODE_VERSION: "22"
 
 jobs:
-  release:
+  verify:
+    name: Verify and package
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+      vsix: ${{ steps.meta.outputs.vsix }}
+      publisher: ${{ steps.meta.outputs.publisher }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -20,12 +34,12 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 10.14.0
+          version: ${{ env.PNPM_VERSION }}
 
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
 
       - name: Install dependencies
@@ -43,27 +57,142 @@ jobs:
       - name: Package VSIX
         run: pnpm package
 
-      - name: Upload VSIX artifact
+      - name: Resolve release metadata
+        id: meta
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./package.json').version")
+          publisher=$(node -p "require('./package.json').publisher")
+          name=$(node -p "require('./package.json').name")
+          vsix="$name-$version.vsix"
+
+          # A tag must name the version it ships, or the registries and the
+          # GitHub release disagree about what "v1.2.3" contains.
+          if [ "$GITHUB_REF_TYPE" = tag ] && [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match package.json version (expected v$version)"
+            exit 1
+          fi
+
+          if [ ! -f "$vsix" ]; then
+            echo "::error::vsce did not produce $vsix"
+            ls -1 ./*.vsix || true
+            exit 1
+          fi
+
+          {
+            echo "version=$version"
+            echo "publisher=$publisher"
+            echo "vsix=$vsix"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Upload VSIX
         uses: actions/upload-artifact@v7
         with:
-          name: paredit-redex-vsix
-          path: "*.vsix"
+          name: vsix
+          path: ${{ steps.meta.outputs.vsix }}
+          if-no-files-found: error
+          retention-days: 90
 
-      - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v')
+  github-release:
+    name: GitHub release
+    needs: verify
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Download VSIX
+        uses: actions/download-artifact@v8
+        with:
+          name: vsix
+
+      - name: Create release
         uses: softprops/action-gh-release@v3
         with:
-          files: "*.vsix"
+          files: ${{ needs.verify.outputs.vsix }}
+          fail_on_unmatched_files: true
           generate_release_notes: true
 
-      - name: Publish to VS Code Marketplace
-        if: startsWith(github.ref, 'refs/tags/v') && env.VSCE_PAT != ''
-        run: pnpm vsce publish --no-dependencies --allow-unused-files-pattern --allow-missing-repository --packagePath *.vsix
+  publish-marketplace:
+    name: VS Code Marketplace
+    needs: verify
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: vs-marketplace
+      url: https://marketplace.visualstudio.com/items?itemName=${{ needs.verify.outputs.publisher }}.paredit-redex
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download VSIX
+        uses: actions/download-artifact@v8
+        with:
+          name: vsix
+
+      # Publishes the exact artifact `verify` built and tested, rather than
+      # repackaging from source and shipping something never tested.
+      - name: Publish
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: pnpm exec vsce publish --packagePath "${{ needs.verify.outputs.vsix }}" --skip-duplicate
 
-      - name: Publish to Open VSX
-        if: startsWith(github.ref, 'refs/tags/v') && env.OVSX_PAT != ''
-        run: pnpm ovsx publish *.vsix
+  publish-open-vsx:
+    name: Open VSX
+    needs: verify
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: open-vsx
+      url: https://open-vsx.org/extension/${{ needs.verify.outputs.publisher }}/paredit-redex
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download VSIX
+        uses: actions/download-artifact@v8
+        with:
+          name: vsix
+
+      # Fails with a clear message if the PAT cannot publish to the namespace,
+      # instead of an opaque 403 from the upload itself.
+      - name: Verify namespace access
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: pnpm exec ovsx verify-pat "${{ needs.verify.outputs.publisher }}"
+
+      - name: Publish
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: pnpm exec ovsx publish "${{ needs.verify.outputs.vsix }}" --skip-duplicate
