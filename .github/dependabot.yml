@@ -12,14 +12,13 @@ updates:
       prefix: build
       include: scope
     groups:
-      # Minor and patch bumps arrive as one PR; majors stay separate so each can
-      # be judged on its own.
+      # Every update type lands in a single PR, majors included. pnpm-lock.yaml
+      # is then rewritten once a week by one branch, so no two open Dependabot
+      # PRs can conflict over it. A dependency whose major breaks the build gets
+      # an `ignore` entry below until it is ready.
       dev-dependencies:
         patterns:
           - "*"
-        update-types:
-          - minor
-          - patch
     ignore:
       # TypeScript stays on 6 for now, and needs no entry here: typescript-eslint
       # declares `typescript: ">=4.8.4 <6.1.0"`, so Dependabot will not propose 7
