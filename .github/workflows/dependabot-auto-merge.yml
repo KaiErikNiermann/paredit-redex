@@ -1,0 +1,23 @@
+name: Dependabot auto-merge
+
+on: pull_request
+
+# Workflow runs triggered by Dependabot get a read-only token by default, so the
+# write scopes needed to queue a merge are requested explicitly.
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Auto-merge waits for the required `validate` check and merges once it
+      # passes, so nothing here needs to poll or re-run CI.
+      - name: Queue auto-merge
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
