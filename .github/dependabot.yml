@@ -20,14 +20,17 @@ updates:
         patterns:
           - "*"
     ignore:
-      # TypeScript stays on 6 for now, and needs no entry here: typescript-eslint
-      # declares `typescript: ">=4.8.4 <6.1.0"`, so Dependabot will not propose 7
-      # while that holds, and it refuses to load against it in any case
-      # ("typescript-eslint does not support TS 7.0"). TS 7 itself is fine —
-      # tsc --noEmit, the tests, the bundle and the VSIX all pass on it. Typed
-      # linting is what blocks, so raise both together once a stable
-      # typescript-eslint supports it.
-      #
+      # TypeScript stays on 6 until typescript-eslint supports 7. Its peer range
+      # (`typescript: ">=4.8.4 <6.1.0"`) did not stop Dependabot from proposing 7,
+      # and typescript-eslint refuses to load against it ("typescript-eslint does
+      # not support TS 7.0"), so the lint job fails. TS 7 itself is fine: tsc
+      # --noEmit, the tests, the bundle and the VSIX all pass on it. Typed linting
+      # is what blocks, so drop this entry once a stable typescript-eslint supports
+      # it. Minor and patch updates of 6.x still come through.
+      - dependency-name: typescript
+        update-types:
+          - version-update:semver-major
+
       # Deliberately pinned to match `engines.vscode`. The `~` keeps @types/vscode
       # from ever describing an API newer than the oldest editor this extension
       # claims to support, and letting it drift would silently break that
